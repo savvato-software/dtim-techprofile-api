@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="8-v0.0.1">
+		<createTable tableName="candidate_attendance_history" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="candidate_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="candidate_attendance_history_fk1" references="candidate(id)"/>			
+			</column>
+            <column name="checkin_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            </column>
+		</createTable>
+    </changeSet>
+
+	<changeSet author="haxwell" id="9-v0.0.1">
+		<createTable tableName="candidate_tech_profile_change_history" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="candidate_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="candidate_tech_profile_change_history_fk1" references="candidate(id)"/>			
+			</column>
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="candidate_tech_profile_change_history_fk2" references="tech_profile_line_item(id)"/>			
+			</column>
+			<column name="from" type="TINYINT(1)">
+			</column>
+			<column name="to" type="TINYINT(1)">
+			</column>
+            <column name="checkin_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            </column>
+			<column name="comment" type="VARCHAR(1024)">
+			</column>
+		</createTable>
+    </changeSet>
+
+</databaseChangeLog>

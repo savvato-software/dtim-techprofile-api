@@ -44,7 +44,7 @@
 			<column name="client_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="client_watch_fk1" references="client(id)"/>			
 			</column>
-			<column name="line_item_set_id" type="BIGINT(20)">
+			<column name="line_item_set_id" type="BIGINT(20)">l
                 <constraints nullable="false" foreignKeyName="client_watch_fk2" references="tech_profile_line_item_set(id)"/>
 			</column>
 			<column name="tech_profile_line_item_score" type="TINYINT(1)">
