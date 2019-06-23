@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="1-v0.0.1">
+		<createTable tableName="candidate_emailOrPhone" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="email" type="VARCHAR(256)">
+			</column>
+			<column name="phone" type="VARCHAR(32)">
+			</column>
+		</createTable>
+
+		<createTable tableName="candidate" catalogName="dtim_db">
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="emailOrPhone_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="candidate_fk1" references="candidate_emailOrPhone(id)"/>			
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="haxwell" id="2-v0.0.1">
+		<createTable tableName="tech_profile" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+
+		<createTable tableName="tech_profile_topic" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+
+		<createTable tableName="tech_profile_topic_map" catalogName="dtim_db" >
+			<column name="tech_profile_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="tech_profile_topic_map_fk1" references="tech_profile(id)"/>			
+			</column>
+			<column name="tech_profile_topic_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="tech_profile_topic_map_fk2" references="tech_profile_topic(id)"/>			
+			</column>
+		</createTable>
+
+		<createTable tableName="tech_profile_line_item" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="l0_description" type="VARCHAR(512)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="l1_description" type="VARCHAR(512)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="l2_description" type="VARCHAR(512)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="l3_description" type="VARCHAR(512)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+
+		<createTable tableName="tech_profile_topic_line_item_map" catalogName="dtim_db" >
+			<column name="tech_profile_topic_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="tech_profile_topic_line_item_map_fk1" references="tech_profile_topic(id)"/>			
+			</column>
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="tech_profile_topic_line_item_map_fk2" references="tech_profile_line_item(id)"/>			
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="haxwell" id="3-v0.0.1">
+        <sql dbms="mysql">
+            INSERT INTO tech_profile (id, name) 
+            VALUES (1, "DTIM Programmer Competency Tech Profile");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_topic (id, name) 
+            VALUES (1, "Computer Science");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description) 
+            VALUES (1, 
+            	"Data Structures", 
+            	"Doesn't know the difference between Array and LinkedList",
+            	"Able to explain and use Arrays, LinkedLists, Dictionaries etc in practical programming tasks",
+            	"Knows space and time tradeoffs of the basic data structures, Arrays vs LinkedLists, Able to explain how hashtables can be implemented and can handle collisions, Priority queues and ways to implement them etc.",
+            	"Knowledge of advanced data structures like B-trees, binomial and fibonacci heaps, AVL/Red Black trees, Splay Trees, Skip Lists, tries etc");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (2, 
+            	"Algorithms", 
+            	"Unable to find the average of numbers in an array",
+            	"Basic sorting, searching and data structure traversal and retrieval algorithms",
+            	"Tree, Graph, simple greedy and divide and conquer algorithms, is able to understand the relevance of the levels of this matrix.",
+            	"Able to recognize and code dynamic programming solutions, good knowledge of graph algorithms, good knowledge of numerical computation algorithms, able to identify NP problems etc.");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (3, 
+            	"Systems Programming", 
+            	"Doesn’t know what a compiler, linker or interpreter is",
+            	"Basic understanding of compilers, linker and interpreters. Understands what assembly code is and how things work at the hardware level. Some knowledge of virtual memory and paging.",
+            	"Understands kernel mode vs. user mode, multi-threading, synchronization primitives and how they’re implemented, able to read assembly code. Understands how networks work, understanding of network protocols and socket level programming.",
+            	"Understands the entire programming stack, hardware (CPU + Memory + Cache + Interrupts + microcode), binary code, assembly, static and dynamic linking, compilation, interpretation, JIT compilation, garbage collection, heap, stack, memory addressing");
+        </sql>
+
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_topic (id, name) 
+            VALUES (2, "Software Engineering");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (4, 
+            	"Source Code Version Control", 
+            	"Doesn't use any version control.",
+            	"Can clone a repo, create branches, commit to them, push changes to a remote repo.",
+            	"Advanced Git 1",
+            	"Advanced Git 2");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (5, 
+            	"Build Automation", 
+            	"Only knows how to build from IDE",
+            	"Knows how to build the system from the command line",
+            	"Can setup a script to build the basic system",
+            	"Can setup a script to build the system and also documentation, installers, generate release notes and tag the code in source control");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (6, 
+            	"Automated Testing", 
+            	"Thinks that all testing is the job of the tester",
+            	"Has written automated unit tests and comes up with good unit test cases for the code that is being written",
+            	"Has written code in TDD manner",
+            	"Understands and is able to setup automated functional, load/performance and UI tests");
+        </sql>
+        
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id) 
+            VALUES (1, 1);
+		</sql>
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id) 
+            VALUES (1, 2);
+		</sql>
+
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id) 
+            VALUES (1, 1);
+		</sql>
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
+            VALUES (1, 2);
+		</sql>
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
+            VALUES (1, 3);
+		</sql>
+
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
+            VALUES (2, 4);
+		</sql>
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
+            VALUES (2, 5);
+		</sql>
+		<sql dbms="mysql">
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
+            VALUES (2, 6);
+		</sql>
+        
+	</changeSet>
+
+</databaseChangeLog>
+
