@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="5-v0.0.1">
+		<createTable tableName="client" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="emailOrPhone_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="client_fk1" references="emailOrPhone(id)"/>			
+			</column>
+		</createTable>
+    </changeSet>
+    
+	<changeSet author="haxwell" id="6-v0.0.1">
+		<createTable tableName="tech_profile_line_item_set" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		
+		<createTable tableName="tech_profile_line_item_set_line_item_map" catalogName="dtim_db" >
+			<column name="line_item_set_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="line_item_set_line_item_map_fk1" references="tech_profile_line_item_set(id)"/>			
+			</column>
+			<column name="line_item_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="line_item_set_line_item_map_fk2" references="tech_profile_line_item(id)"/>			
+			</column>
+		</createTable>		
+    </changeSet>
+    
+	<changeSet author="haxwell" id="7-v0.0.1">
+		<createTable tableName="client_watch" catalogName="dtim_db" >
+			<column name="client_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="client_watch_fk1" references="client(id)"/>			
+			</column>
+			<column name="line_item_set_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="client_watch_fk2" references="tech_profile_line_item_set(id)"/>
+			</column>
+			<column name="tech_profile_line_item_score" type="TINYINT(1)">
+			</column>
+		</createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
 	<changeSet author="haxwell" id="1-v0.0.1">
-		<createTable tableName="candidate_emailOrPhone" catalogName="dtim_db" >
+		<createTable tableName="emailOrPhone" catalogName="dtim_db" >
 			<column name="id" type="BIGINT(20)" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true"/>			
 			</column>
@@ -24,7 +24,7 @@
 				<constraints nullable="false"/>			
 			</column>
 			<column name="emailOrPhone_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="candidate_fk1" references="candidate_emailOrPhone(id)"/>			
+                <constraints nullable="false" foreignKeyName="candidate_fk1" references="emailOrPhone(id)"/>			
 			</column>
 		</createTable>
 	</changeSet>
@@ -193,6 +193,20 @@
 		</sql>
         
 	</changeSet>
+
+	<changeSet author="haxwell" id="4-v0.0.1">
+		<createTable tableName="candidate_tech_profile" catalogName="dtim_db" >
+			<column name="candidate_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="candidate_tech_profile_fk1" references="candidate(id)"/>			
+			</column>
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+				<constraints nullable="false" foreignKeyName="candidate_tech_profile_fk3" references="tech_profile_line_item(id)"/>			
+			</column>
+			<column name="tech_profile_line_item_score" type="TINYINT(1)">
+			</column>
+		</createTable>
+    </changeSet>
+
 
 </databaseChangeLog>
 
