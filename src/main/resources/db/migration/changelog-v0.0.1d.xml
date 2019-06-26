@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="10-v0.0.1">
+		<createTable tableName="user" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+			<column name="password" type="VARCHAR(256)">
+			</column>
+			<column name="enabled" type="TINYINT(1)">
+			</column>
+		</createTable>
+		
+        <sql dbms="mysql">
+            INSERT INTO user (id, name, password, enabled)
+            VALUES (1, 
+            	"admin", 
+            	"admin",
+            	"1");
+        </sql>
+    </changeSet>
+
+	<changeSet author="haxwell" id="11-v0.0.1">
+		<createTable tableName="user_role" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		
+        <sql dbms="mysql">
+            INSERT INTO user_role (id, name) VALUES (1, "admin");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO user_role (id, name) VALUES (2, "regular");
+        </sql>
+    </changeSet>
+
+	<changeSet author="haxwell" id="12-v0.0.1">
+		<createTable tableName="user_user_role_map" catalogName="dtim_db" >
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_user_role_map_fk1" references="user(id)"/>			
+			</column>
+			<column name="user_role_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_user_role_map_fk2" references="user_role(id)"/>			
+			</column>
+		</createTable>
+		
+        <sql dbms="mysql">
+            INSERT INTO user_user_role_map (user_id, user_role_id) VALUES (1, 1);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

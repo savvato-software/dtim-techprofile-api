@@ -13,8 +13,9 @@
 			<column name="name" type="VARCHAR(128)">
 				<constraints nullable="false"/>			
 			</column>
-			<column name="emailOrPhone_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="client_fk1" references="emailOrPhone(id)"/>			
+			<column name="email" type="VARCHAR(256)">
+			</column>
+			<column name="phone" type="VARCHAR(32)">
 			</column>
 		</createTable>
     </changeSet>
