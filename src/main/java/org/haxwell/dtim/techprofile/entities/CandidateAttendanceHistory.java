@@ -3,25 +3,25 @@ package org.haxwell.dtim.techprofile.entities;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity
+@IdClass(CandidateAttendanceHistoryId.class)
 public class CandidateAttendanceHistory {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long mockInterviewSessionId;
 	
-	public Long getId() {
-		return id;
+	public Long getMockInterviewSessionId() {
+		return mockInterviewSessionId;
 	}
 	
-	public void setId(Long id) {
-		this.id = id;
+	public void setMockInterviewSessionId(Long id) {
+		this.mockInterviewSessionId = id;
 	}
 	
+	@Id
 	private Long candidateId;
 	
 	public Long getCandidateId() {
@@ -46,7 +46,14 @@ public class CandidateAttendanceHistory {
     	this.checkinTimestamp = ts;
     }
 
-    public CandidateAttendanceHistory(Long candidateId) {
+    public CandidateAttendanceHistory(Long mockInterviewSessionId, Long candidateId) {
+    	this.mockInterviewSessionId = mockInterviewSessionId;
     	this.candidateId = candidateId;
+    	
+    	this.setCheckinTimestamp();
+    }
+    
+    public CandidateAttendanceHistory() {
+    	this.setCheckinTimestamp();
     }
 }

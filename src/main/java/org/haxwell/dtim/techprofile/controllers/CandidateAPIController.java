@@ -1,10 +1,15 @@
 package org.haxwell.dtim.techprofile.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.haxwell.dtim.techprofile.constants.Constants;
 import org.haxwell.dtim.techprofile.entities.Candidate;
+import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.services.CandidateService;
+import org.haxwell.dtim.techprofile.services.TechProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +21,9 @@ public class CandidateAPIController {
 
 	@Autowired
 	CandidateService candidateService;
+	
+	@Autowired
+	TechProfileService techProfileService;
 	
 	CandidateAPIController() {
 		
@@ -40,5 +48,35 @@ public class CandidateAPIController {
 		String query = request.getParameter("q");
 		
 		return candidateService.find(query);
+	}
+	
+	@RequestMapping(value = { "/api/candidates/in-attendance" }, method=RequestMethod.GET)
+	public List<Candidate> getCandidatesInAttendance() {
+		return candidateService.getCandidatesInAttendance();
+	}
+	
+	@RequestMapping(value = { "/api/candidate/{id}/techprofile/scores" }, method=RequestMethod.GET)
+	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(@PathVariable Long id) {
+		return techProfileService.getCandidateIdScores(id);
+	}
+	
+	@RequestMapping(value = { "/api/candidate/{id}/techprofile/scores" }, method=RequestMethod.POST)
+	public boolean setCandidateIdScores(HttpServletRequest request, @PathVariable Long id) {
+		Long count = Long.parseLong(request.getParameter("count"));
+		int ctr = 0;
+		
+		List<CandidateTechProfileLineItemScore> scores = new ArrayList<>();
+		
+		while (ctr < count) {
+			CandidateTechProfileLineItemScore score = new CandidateTechProfileLineItemScore();
+			score.setCandidateId(id);
+			score.setTechProfileLineItemId(Long.parseLong(request.getParameter("techProfileLineItemId"+ctr)));
+			score.setTechProfileLineItemScore(Long.parseLong(request.getParameter("techProfileLineItemScore"+ctr)));
+			
+			scores.add(score);
+			ctr++;
+		}
+		
+		return candidateService.saveScores(scores);
 	}
 }

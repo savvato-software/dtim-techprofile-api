@@ -23,7 +23,7 @@
             INSERT INTO user (id, name, password, enabled)
             VALUES (1, 
             	"admin", 
-            	"admin",
+            	"$2a$10$wGcNuV0Kodg7uz6qI/l/1uz1mMcpmAGZqfuZ3JxY9cAeejtYXUbWC",
             	"1");
         </sql>
     </changeSet>

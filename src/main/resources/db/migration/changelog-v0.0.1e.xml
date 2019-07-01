@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="13-v0.0.1">
+		<createTable tableName="question" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="text" type="VARCHAR(2048)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+
+		<createTable tableName="line_item_level_question_map" catalogName="dtim_db" >
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="line_item_level_question_map_fk1" references="tech_profile_line_item(id)"/>
+			</column>
+			<column name="tech_profile_line_item_level_index" type="TINYINT(1)">
+                <constraints nullable="false" />
+			</column>
+			<column name="question_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="line_item_level_question_map_fk2" references="question(id)"/>
+			</column>
+		</createTable>
+    </changeSet>
+    
+	<changeSet author="haxwell" id="13-v0.0.1-a" context="test">
+		<sql dbms="mysql">
+			INSERT INTO question (id, text) VALUES (1, 'Describe an array.'), (2, 'Describe a linked list'), (3, 'Describe when you would use an array over a linked list, or vice versa.');
+		</sql>
+		<sql dbms="mysql">
+			INSERT INTO question (id, text) VALUES (4, 'Given an array of integers, write an algorithm to determine the average value.'), (5, 'Algorithm Level 1, Question 2'), (6, 'Algorithm Level 1, Question 3');
+		</sql>
+	</changeSet>    
+
+	<changeSet author="haxwell" id="13-v0.0.1-b" context="test">
+		<sql dbms="mysql">
+			INSERT INTO line_item_level_question_map (tech_profile_line_item_id, tech_profile_line_item_level_index, question_id) VALUES (1, 0, 1), (1, 0, 2), (1, 0, 3);
+		</sql>
+		<sql dbms="mysql">
+			INSERT INTO line_item_level_question_map (tech_profile_line_item_id, tech_profile_line_item_level_index, question_id) VALUES (2, 0, 4), (2, 0, 5), (2, 0, 6);
+		</sql>
+	</changeSet>    
+
+</databaseChangeLog>

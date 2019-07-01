@@ -187,16 +187,21 @@
 	</changeSet>
 
 	<changeSet author="haxwell" id="4-v0.0.1">
-		<createTable tableName="candidate_tech_profile" catalogName="dtim_db" >
+		<createTable tableName="candidate_tech_profile_line_item_score" catalogName="dtim_db" >
 			<column name="candidate_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="candidate_tech_profile_fk1" references="candidate(id)"/>			
+                <constraints nullable="false" foreignKeyName="candidate_tech_profile_line_item_score_fk1" references="candidate(id)"/>
 			</column>
 			<column name="tech_profile_line_item_id" type="BIGINT(20)">
-				<constraints nullable="false" foreignKeyName="candidate_tech_profile_fk3" references="tech_profile_line_item(id)"/>			
+				<constraints nullable="false" foreignKeyName="candidate_tech_profile_line_item_score_fk2" references="tech_profile_line_item(id)"/>
 			</column>
 			<column name="tech_profile_line_item_score" type="TINYINT(1)">
 			</column>
 		</createTable>
+		<addPrimaryKey catalogName="dtim_db"
+            tableName="candidate_tech_profile_line_item_score"
+            columnNames="candidate_id, tech_profile_line_item_id"
+            constraintName="pk_candidate_tech_profile_line_item_score"
+            />
     </changeSet>
 
 

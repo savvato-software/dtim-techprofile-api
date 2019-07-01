@@ -5,15 +5,27 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-	<changeSet author="haxwell" id="8-v0.0.1">
-		<createTable tableName="candidate_attendance_history" catalogName="dtim_db" >
+	<changeSet author="haxwell" id="8-v0.0.1-a">
+		<createTable tableName="mock_interview_session" catalogName="dtim_db" >
 			<column name="id" type="BIGINT(20)" autoIncrement="true">
 				<constraints nullable="false" primaryKey="true"/>			
 			</column>
+            <column name="timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            	<constraints nullable="false"/>
+            </column>
+		</createTable>
+    </changeSet>
+
+	<changeSet author="haxwell" id="8-v0.0.1-b">
+		<createTable tableName="candidate_attendance_history" catalogName="dtim_db" >
+			<column name="mock_interview_session_id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" foreignKeyName="candidate_attendance_history_fk1" references="mock_interview_session(id)"/>
+			</column>
 			<column name="candidate_id" type="BIGINT(20)">
-                <constraints nullable="false" foreignKeyName="candidate_attendance_history_fk1" references="candidate(id)"/>			
+                <constraints nullable="false" foreignKeyName="candidate_attendance_history_fk2" references="candidate(id)"/>			
 			</column>
             <column name="checkin_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            	<constraints nullable="false"/>
             </column>
 		</createTable>
     </changeSet>
