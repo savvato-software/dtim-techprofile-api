@@ -57,21 +57,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.csrf()
             	.disable()
         	.authorizeRequests()
-	    		.antMatchers("/api/candidate").permitAll()
-	        	.antMatchers("/api/candidate/new").permitAll()
-	        	.antMatchers("/api/candidates/in-attendance").permitAll()
-	        	.antMatchers("/api/candidate/**/markInAttendance").permitAll()
-	        	.antMatchers("/api/candidate/*/techprofile/scores").permitAll()
-	        	
-	           	.antMatchers("/api/techprofile/**").permitAll()
-	           	
-	           	.antMatchers("/api/question/**").permitAll()
-	           	
-	           	.antMatchers("/api/admin/createSession").permitAll()
-	           	.antMatchers("/api/admin/lastSession").permitAll()
-	    		
-	        	.antMatchers("/api/**").authenticated()
-                
+//	    		.antMatchers("/api/candidate/*").permitAll()
+//	        	.antMatchers("/api/candidate/new").permitAll()
+//	        	.antMatchers("/api/candidates/in-attendance").permitAll()
+//	        	.antMatchers("/api/candidate/**/markInAttendance").permitAll()
+//	        	.antMatchers("/api/candidate/*/techprofile/scores").permitAll()
+//	        	
+//	           	.antMatchers("/api/techprofile/**").permitAll()
+//	           	
+//	           	.antMatchers("/api/question/**").permitAll()
+//	           	
+//	           	.antMatchers("/api/admin/createSession").permitAll()
+//	           	.antMatchers("/api/admin/lastSession").permitAll()
+//	           	
+//	           	.antMatchers("/api/admin/lastSession").permitAll()
+//	    		
+//	        	.antMatchers("/api/**").authenticated()
+//                
 	        	.and() 
                 .logout()
                 .permitAll();

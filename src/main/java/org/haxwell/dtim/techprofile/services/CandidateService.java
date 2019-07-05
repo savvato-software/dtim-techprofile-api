@@ -3,6 +3,7 @@ package org.haxwell.dtim.techprofile.services;
 import java.util.List;
 
 import org.haxwell.dtim.techprofile.entities.Candidate;
+import org.haxwell.dtim.techprofile.entities.CandidateQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 
 public interface CandidateService {
@@ -15,4 +16,7 @@ public interface CandidateService {
 	public List<Candidate> getCandidatesInAttendance();
 	
 	public boolean saveScores(List<CandidateTechProfileLineItemScore> scores);
+	
+	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade);
+	public List<CandidateQuestionGrade> getCandidateQuestionHistory(Long candidateId, Long questionId);
 }

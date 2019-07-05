@@ -7,9 +7,11 @@ import java.util.Optional;
 
 import org.haxwell.dtim.techprofile.entities.Candidate;
 import org.haxwell.dtim.techprofile.entities.CandidateAttendanceHistory;
+import org.haxwell.dtim.techprofile.entities.CandidateQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.entities.MockInterviewSession;
 import org.haxwell.dtim.techprofile.repositories.CandidateAttendanceHistoryRepository;
+import org.haxwell.dtim.techprofile.repositories.CandidateQuestionGradeRepository;
 import org.haxwell.dtim.techprofile.repositories.CandidateRepository;
 import org.haxwell.dtim.techprofile.repositories.CandidateTechProfileLineItemScoreRepository;
 import org.haxwell.dtim.techprofile.repositories.MockInterviewSessionRepository;
@@ -27,6 +29,9 @@ public class CandidateServiceImpl implements CandidateService {
 	
 	@Autowired
 	CandidateTechProfileLineItemScoreRepository scoreRepo;
+
+	@Autowired
+	CandidateQuestionGradeRepository cqgRepo;
 	
 	@Autowired
 	MockInterviewSessionRepository misRepo;
@@ -93,6 +98,16 @@ public class CandidateServiceImpl implements CandidateService {
 		});
 
 		return true;
+	}
+
+	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade) {
+		CandidateQuestionGrade cqg = new CandidateQuestionGrade(candidateId, sessionId, questionId, grade);
+		
+		return cqgRepo.save(cqg);
+	}
+	
+	public List<CandidateQuestionGrade> getCandidateQuestionHistory(Long candidateId, Long questionId) {
+		return cqgRepo.getGradesForQuestion(candidateId, questionId);
 	}
 	
 	public boolean isPhoneValid(String phone) {

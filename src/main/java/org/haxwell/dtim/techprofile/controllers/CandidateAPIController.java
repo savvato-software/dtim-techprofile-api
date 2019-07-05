@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.haxwell.dtim.techprofile.constants.Constants;
 import org.haxwell.dtim.techprofile.entities.Candidate;
+import org.haxwell.dtim.techprofile.entities.CandidateQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.services.CandidateService;
 import org.haxwell.dtim.techprofile.services.TechProfileService;
@@ -79,4 +80,17 @@ public class CandidateAPIController {
 		
 		return candidateService.saveScores(scores);
 	}
+	
+	@RequestMapping(value = { "/api/candidate/{cId}/question/{qId}/history" }, method=RequestMethod.GET)
+	public List<CandidateQuestionGrade> getCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
+		return candidateService.getCandidateQuestionHistory(cId, qId);
+	}	
+
+	@RequestMapping(value = { "/api/candidate/{cId}/question/{qId}/history" }, method=RequestMethod.POST)
+	public CandidateQuestionGrade setCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
+		Long sessionId = Long.parseLong(request.getParameter("sessionId"));
+		Long score = Long.parseLong(request.getParameter("score"));
+
+		return candidateService.setGradeForQuestion(cId, sessionId, qId, score);
+	}	
 }
