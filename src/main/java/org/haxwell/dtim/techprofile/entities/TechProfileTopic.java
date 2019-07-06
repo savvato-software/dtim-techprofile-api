@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class TechProfileTopic {
@@ -54,6 +55,17 @@ public class TechProfileTopic {
     
     public void setLineItems(Set<TechProfileLineItem> lineItems) {
     	this.lineItems = lineItems;
+    }
+    
+    @Transient
+    private Long sequence;
+    
+    public Long getSequence() {
+    	return sequence;
+    }
+    
+    public void setSequence(Long seq) {
+    	this.sequence = seq;
     }
     
 	public TechProfileTopic(String name) {

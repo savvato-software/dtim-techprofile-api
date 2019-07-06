@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class TechProfileLineItem {
@@ -75,7 +76,18 @@ public class TechProfileLineItem {
 		this.l3_description = str;
 	}
 
-	public TechProfileLineItem(String name, String l0_description, String l1_description, String l2_description, String l3_description) {
+    @Transient
+    private Long sequence;
+    
+    public Long getSequence() {
+    	return sequence;
+    }
+    
+    public void setSequence(Long seq) {
+    	this.sequence = seq;
+    }
+
+    public TechProfileLineItem(String name, String l0_description, String l1_description, String l2_description, String l3_description) {
 		this.name = name;
 		this.l0_description = l0_description;
 		this.l1_description = l1_description;
