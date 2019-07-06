@@ -51,6 +51,11 @@ public class CandidateAPIController {
 		return candidateService.find(query);
 	}
 	
+	@RequestMapping(value = { "/api/candidate/{id}" }, method=RequestMethod.GET)
+	public Candidate search(@PathVariable Long id) {
+		return candidateService.findById(id);
+	}
+	
 	@RequestMapping(value = { "/api/candidates/in-attendance" }, method=RequestMethod.GET)
 	public List<Candidate> getCandidatesInAttendance() {
 		return candidateService.getCandidatesInAttendance();
@@ -84,13 +89,14 @@ public class CandidateAPIController {
 	@RequestMapping(value = { "/api/candidate/{cId}/question/{qId}/history" }, method=RequestMethod.GET)
 	public List<CandidateQuestionGrade> getCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
 		return candidateService.getCandidateQuestionHistory(cId, qId);
-	}	
+	}
 
 	@RequestMapping(value = { "/api/candidate/{cId}/question/{qId}/history" }, method=RequestMethod.POST)
 	public CandidateQuestionGrade setCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
 		Long sessionId = Long.parseLong(request.getParameter("sessionId"));
 		Long score = Long.parseLong(request.getParameter("score"));
+		String comment = request.getParameter("comment");
 
-		return candidateService.setGradeForQuestion(cId, sessionId, qId, score);
+		return candidateService.setGradeForQuestion(cId, sessionId, qId, score, comment);
 	}	
 }

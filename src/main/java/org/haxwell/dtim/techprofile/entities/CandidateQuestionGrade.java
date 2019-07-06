@@ -51,11 +51,22 @@ public class CandidateQuestionGrade {
 		this.grade = grade;
 	}
 
-	public CandidateQuestionGrade(Long candidateId, Long sessionId, Long questionId, Long grade) {
+	private String comment;
+	
+    public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public CandidateQuestionGrade(Long candidateId, Long sessionId, Long questionId, Long grade, String comment) {
 		this.candidateId = candidateId;
 		this.sessionId = sessionId;
 		this.questionId = questionId;
 		this.grade = grade;
+		this.comment = comment;
     }
 
 	public CandidateQuestionGrade() {

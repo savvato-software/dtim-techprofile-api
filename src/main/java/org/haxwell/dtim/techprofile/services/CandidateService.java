@@ -12,11 +12,12 @@ public interface CandidateService {
 	public boolean markInAttendance(Long candidateId);
 	
 	public Candidate find(String query);
+	public Candidate findById(Long id);
 	
 	public List<Candidate> getCandidatesInAttendance();
 	
 	public boolean saveScores(List<CandidateTechProfileLineItemScore> scores);
 	
-	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade);
+	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade, String comment);
 	public List<CandidateQuestionGrade> getCandidateQuestionHistory(Long candidateId, Long questionId);
 }

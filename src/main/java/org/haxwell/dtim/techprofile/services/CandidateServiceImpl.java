@@ -79,6 +79,16 @@ public class CandidateServiceImpl implements CandidateService {
 		return rtn;
 	}
 	
+	public Candidate findById(Long id) {
+		Optional<Candidate> opt = candidateRepo.findById(id);
+		Candidate rtn = null;
+		
+		if (opt.isPresent())
+			rtn = opt.get();
+		
+		return rtn;
+	}
+	
 	public List<Candidate> getCandidatesInAttendance() {
 		List<CandidateAttendanceHistory> cahList = cahRepo.getThoseWithinTheLastThreeHours();
 		
@@ -100,8 +110,8 @@ public class CandidateServiceImpl implements CandidateService {
 		return true;
 	}
 
-	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade) {
-		CandidateQuestionGrade cqg = new CandidateQuestionGrade(candidateId, sessionId, questionId, grade);
+	public CandidateQuestionGrade setGradeForQuestion(Long candidateId, Long sessionId, Long questionId, Long grade, String comment) {
+		CandidateQuestionGrade cqg = new CandidateQuestionGrade(candidateId, sessionId, questionId, grade, comment);
 		
 		return cqgRepo.save(cqg);
 	}
