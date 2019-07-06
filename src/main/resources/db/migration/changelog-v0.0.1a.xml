@@ -20,6 +20,8 @@
 			</column>
 		</createTable>
 	</changeSet>
+	
+	<!-- WILO.. add sequence to the tech_profile_topic_line_item_map table and tech_profile_topic_map -->
 
 	<changeSet author="haxwell" id="2-v0.0.1">
 		<createTable tableName="tech_profile" catalogName="dtim_db" >
@@ -46,6 +48,9 @@
 			</column>
 			<column name="tech_profile_topic_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="tech_profile_topic_map_fk2" references="tech_profile_topic(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
 			</column>
 		</createTable>
 
@@ -76,6 +81,9 @@
 			</column>
 			<column name="tech_profile_line_item_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="tech_profile_topic_line_item_map_fk2" references="tech_profile_line_item(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
 			</column>
 		</createTable>
 	</changeSet>
@@ -150,40 +158,17 @@
         </sql>
         
 		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id) 
-            VALUES (1, 1);
+            INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id, sequence) 
+            VALUES (1, 1, 1), (1, 2, 2);
 		</sql>
 		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id) 
-            VALUES (1, 2);
-		</sql>
-
-		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id) 
-            VALUES (1, 1);
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id, sequence) 
+            VALUES (1, 1, 1), (1, 2, 2), (1, 3, 3);
 		</sql>
 		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
-            VALUES (1, 2);
+            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id, sequence)
+            VALUES (2, 4, 1), (2, 5, 2), (2, 6, 3);
 		</sql>
-		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
-            VALUES (1, 3);
-		</sql>
-
-		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
-            VALUES (2, 4);
-		</sql>
-		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
-            VALUES (2, 5);
-		</sql>
-		<sql dbms="mysql">
-            INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id)
-            VALUES (2, 6);
-		</sql>
-        
 	</changeSet>
 
 	<changeSet author="haxwell" id="4-v0.0.1">
