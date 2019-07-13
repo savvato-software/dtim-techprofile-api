@@ -14,9 +14,12 @@ import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
 import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
 import org.haxwell.dtim.techprofile.repositories.CandidateTechProfileLineItemScoreRepository;
+import org.haxwell.dtim.techprofile.repositories.TechProfileLineItemRepository;
 import org.haxwell.dtim.techprofile.repositories.TechProfileRepository;
+import org.haxwell.dtim.techprofile.repositories.TechProfileTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TechProfileServiceImpl implements TechProfileService {
@@ -26,6 +29,12 @@ public class TechProfileServiceImpl implements TechProfileService {
 	
 	@Autowired
 	TechProfileRepository techProfileRepository;
+	
+	@Autowired
+	TechProfileTopicRepository techProfileTopicRepository;
+	
+	@Autowired
+	TechProfileLineItemRepository techProfileLineItemRepository;
 	
 	@Autowired
 	CandidateTechProfileLineItemScoreRepository ctplisRepository;
@@ -67,13 +76,39 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
-	public boolean addTopic(String topicName) {
+	@Transactional
+	public TechProfileTopic addTopic(String topicName) {
+		TechProfileTopic rtn = techProfileTopicRepository.save(new TechProfileTopic(topicName));
 		
+		Long currentMaxSequenceNum = Long.parseLong(em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_map where tech_profile_id=1")
+				.getResultList().get(0).toString());
+		
+		em.createNativeQuery("INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id, sequence) VALUES (1, :topicId, :sequence)")
+			.setParameter("topicId",  rtn.getId())
+			.setParameter("sequence", currentMaxSequenceNum + 1)
+			.executeUpdate();
+		
+		return rtn;
 	}
 	
 	@Override
-	public boolean addLineItem(Long topicId, String lineItemName) {
+	@Transactional
+	public TechProfileLineItem addLineItem(Long topicId, String lineItemName) {
+		TechProfileLineItem rtn = techProfileLineItemRepository.save(new TechProfileLineItem(lineItemName));
+
+		Long currentMaxSequenceNum = Long.parseLong(em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_line_item_map where tech_profile_topic_id=:topicId")
+				.setParameter("topicId", topicId)
+				.getResultList().get(0).toString());
 		
+		if (topicId > 0) {
+			em.createNativeQuery("INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id) VALUES (:topicId, :lineItemId)")
+				.setParameter("topicId", topicId)
+				.setParameter("lineItemId", rtn.getId())
+				.setParameter("sequence", currentMaxSequenceNum + 1)				
+				.executeUpdate();
+		}
+
+		return rtn;
 	}
 	
 	@Override
