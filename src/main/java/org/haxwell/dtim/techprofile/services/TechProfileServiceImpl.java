@@ -67,6 +67,16 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
+	public boolean addTopic(String topicName) {
+		
+	}
+	
+	@Override
+	public boolean addLineItem(Long topicId, String lineItemName) {
+		
+	}
+	
+	@Override
 	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId) {
 		return ctplisRepository.findByCandidateId(candidateId);
 	}

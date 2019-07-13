@@ -19,13 +19,20 @@
 			<column name="tech_profile_line_item_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="line_item_level_question_map_fk1" references="tech_profile_line_item(id)"/>
 			</column>
-			<column name="tech_profile_line_item_level_index" type="TINYINT(1)">
+			<column name="tech_profile_line_item_level_index" type="BIGINT(20)">
                 <constraints nullable="false" />
 			</column>
 			<column name="question_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="line_item_level_question_map_fk2" references="question(id)"/>
 			</column>
 		</createTable>
+		
+		<addPrimaryKey catalogName="dtim_db"
+            tableName="line_item_level_question_map"
+            columnNames="question_id, tech_profile_line_item_id"
+            constraintName="pk_question_tech_profile_line_item"
+            />
+ 
     </changeSet>
     
 	<changeSet author="haxwell" id="13-v0.0.1-a" context="test">
