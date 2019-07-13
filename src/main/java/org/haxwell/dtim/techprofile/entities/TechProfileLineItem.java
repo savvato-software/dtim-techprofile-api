@@ -87,10 +87,6 @@ public class TechProfileLineItem {
     	this.sequence = seq;
     }
 
-    public TechProfileLineItem(String name) {
-    	this.name = name;
-    }
-    
     public TechProfileLineItem(String name, String l0_description, String l1_description, String l2_description, String l3_description) {
 		this.name = name;
 		this.l0_description = l0_description;

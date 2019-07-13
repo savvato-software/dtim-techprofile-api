@@ -93,18 +93,18 @@ public class TechProfileServiceImpl implements TechProfileService {
 	
 	@Override
 	@Transactional
-	public TechProfileLineItem addLineItem(Long topicId, String lineItemName) {
-		TechProfileLineItem rtn = techProfileLineItemRepository.save(new TechProfileLineItem(lineItemName));
+	public TechProfileLineItem addLineItem(Long topicId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc) {
+		TechProfileLineItem rtn = techProfileLineItemRepository.save(new TechProfileLineItem(lineItemName, l0desc, l1desc, l2desc, l3desc));
 
 		Long currentMaxSequenceNum = Long.parseLong(em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_line_item_map where tech_profile_topic_id=:topicId")
 				.setParameter("topicId", topicId)
 				.getResultList().get(0).toString());
 		
 		if (topicId > 0) {
-			em.createNativeQuery("INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id) VALUES (:topicId, :lineItemId)")
+			em.createNativeQuery("INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id, sequence) VALUES (:topicId, :lineItemId, :sequence)")
 				.setParameter("topicId", topicId)
 				.setParameter("lineItemId", rtn.getId())
-				.setParameter("sequence", currentMaxSequenceNum + 1)				
+				.setParameter("sequence", currentMaxSequenceNum + 1)
 				.executeUpdate();
 		}
 
