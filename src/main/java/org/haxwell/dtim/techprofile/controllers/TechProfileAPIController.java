@@ -44,4 +44,17 @@ public class TechProfileAPIController {
 		
 		return techProfileService.addLineItem(id, name, l0desc, l1desc, l2desc, l3desc);
 	}
+	
+	@RequestMapping(value = { "/api/techprofile/lineitem/{lineItemId}" }, method=RequestMethod.POST)
+	public TechProfileLineItem updateLineItem(HttpServletRequest request, @PathVariable Long lineItemId) {
+		String name = request.getParameter("lineItemName");
+		String l0desc = request.getParameter("l0description");
+		String l1desc = request.getParameter("l1description");
+		String l2desc = request.getParameter("l2description");
+		String l3desc = request.getParameter("l3description");
+
+		return techProfileService.updateLineItem(lineItemId, name, l0desc, l1desc, l2desc, l3desc);
+	}
+	
+	
 }

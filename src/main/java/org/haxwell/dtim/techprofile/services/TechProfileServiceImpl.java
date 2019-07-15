@@ -112,6 +112,27 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
+	public TechProfileLineItem updateLineItem(Long lineItemId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc) {
+		Optional<TechProfileLineItem> opt = techProfileLineItemRepository.findById(lineItemId);
+		TechProfileLineItem rtn = null;
+		
+		if (opt.isPresent()) {
+			TechProfileLineItem tpli = opt.get();
+			
+			tpli.setL0Description(l0desc);
+			tpli.setL1Description(l1desc);
+			tpli.setL2Description(l2desc);
+			tpli.setL3Description(l3desc);
+			
+			tpli.setName(lineItemName);
+			
+			rtn = techProfileLineItemRepository.save(tpli);
+		}
+
+		return rtn;
+	}
+	
+	@Override
 	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId) {
 		return ctplisRepository.findByCandidateId(candidateId);
 	}

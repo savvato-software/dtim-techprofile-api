@@ -12,5 +12,6 @@ public interface TechProfileService {
 	public TechProfile get(Long id);
 	public TechProfileTopic addTopic(String topicName);
 	public TechProfileLineItem addLineItem(Long topicId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc);
+	public TechProfileLineItem updateLineItem(Long lineItemId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc);
 	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId);
 }
