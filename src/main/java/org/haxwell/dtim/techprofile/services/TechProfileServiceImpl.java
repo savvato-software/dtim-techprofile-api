@@ -112,6 +112,21 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
+	public TechProfileTopic updateTopic(Long topicId, String name) {
+		Optional<TechProfileTopic> opt = techProfileTopicRepository.findById(topicId);
+		TechProfileTopic rtn = null;
+		
+		if (opt.isPresent()) {
+			TechProfileTopic tpt = opt.get();
+			tpt.setName(name);
+			
+			rtn = techProfileTopicRepository.save(tpt);
+		}
+
+		return rtn;
+	}
+	
+	@Override
 	public TechProfileLineItem updateLineItem(Long lineItemId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc) {
 		Optional<TechProfileLineItem> opt = techProfileLineItemRepository.findById(lineItemId);
 		TechProfileLineItem rtn = null;
@@ -135,6 +150,34 @@ public class TechProfileServiceImpl implements TechProfileService {
 	@Override
 	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId) {
 		return ctplisRepository.findByCandidateId(candidateId);
+	}
+	
+	@Override
+	@Transactional
+	public boolean updateSequencesRelatedToATopicAndItsLineItems(long[] arr) {
+		Optional<TechProfileTopic> opt = techProfileTopicRepository.findById(arr[1]);
+
+		if (opt.isPresent()) {
+			this.setTopicSequence(arr[1], arr[2]);
+			this.setLineItemSequence(arr[1], arr[3], arr[4]);
+		}
+		
+		return true;
+	}
+	
+	private void setTopicSequence(Long topicId, Long sequence) {
+		em.createNativeQuery("UPDATE tech_profile_topic_map tptm SET tptm.sequence = :sequence WHERE tptm.tech_profile_topic_id = :topicId")
+			.setParameter("topicId", topicId)
+			.setParameter("sequence", sequence)
+			.executeUpdate();
+	}
+	
+	private void setLineItemSequence(Long topicId, Long lineItemId, Long sequence) {
+		em.createNativeQuery("UPDATE tech_profile_topic_line_item_map tplitm SET tplitm.sequence=:sequence WHERE tplitm.tech_profile_topic_id=:topicId AND tplitm.tech_profile_line_item_id=:lineItemId")
+		.setParameter("topicId", topicId)
+		.setParameter("lineItemId", lineItemId)
+		.setParameter("sequence", sequence)
+		.executeUpdate();
 	}
 	
 	/**

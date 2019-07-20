@@ -45,14 +45,34 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Transactional
-	public void setAllLineItemAndLevelsFor(Long questionId, int[][] arr, int count) {
+	public void setAllLineItemAndLevelsFor(Long questionId, int[][] arr) {
 		em.createNativeQuery("DELETE FROM line_item_level_question_map WHERE question_id=:questionId")
 			.setParameter("questionId",  questionId).executeUpdate();
 		
 		int x=0;
-		while (x < count) {
+		while (x < arr.length) {
 			int numUpdated = em.createNativeQuery("INSERT INTO line_item_level_question_map (tech_profile_line_item_id, tech_profile_line_item_level_index, question_id) VALUES (" + arr[x][0] + "," + arr[x][1] + "," + questionId + ");").executeUpdate();
 			x++;
 		}			
+	}
+	
+	@Transactional
+	public Question save(Long questionId, String questionText, int[][] lilvassociations) {
+		Optional<Question> opt = this.questionRepository.findById(questionId);
+		Question q; 
+		
+		if (opt.isPresent()) {
+			q = opt.get();
+		} else {
+			q = new Question();
+		}
+		
+		q.setText(questionText);
+		
+		this.questionRepository.save(q);
+		
+		this.setAllLineItemAndLevelsFor(questionId, lilvassociations);
+		
+		return q;
 	}
 }
