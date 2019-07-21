@@ -1,0 +1,39 @@
+New Droplet Setup Notes
+-----------
+
+
+-- CRON JOBS
+There are at present two cron jobs, and you will need to do a 'crontab -e' to add the entries to run them. First thing to do, is when you edit the crontab, add an entry for the EASYAH_ENVIRONMENT variable. Just add 'EASYAH_ENVIRONMENT=[DEV|STAGING|PROD]' on one of the lines before the cron entries. Then you will need the following entries:
+
+@reboot sh /home/quizki/src/eog-api/bin/onstartup.sh
+0 8 * * * sh /home/quizki/src/eog-api/bin/create-backup-tar.sh
+
+
+-- SSH ACCESS
+You should only be accessing the droplet via an id_rsa key.
+
+
+-- NETWORK FIREWALL
+You will need to set up iptables. Use the following commands:
+
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo iptables -A INPUT -i lo -j ACCEPT
+sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT    #NOTE this is here for the future. as of v0.0.15, there is no port 80 HTTP traffic
+sudo iptables -A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT
+sudo iptables -A INPUT -j DROP
+
+if you haven't already installed it, you will need to "sudo apt-get install iptables-persistent" to persist the iptables changes.
+
+
+
+-- DATABASE INITIAL SETUP
+
+You may need to rename out of the way the file ~/.my.cnf which provides default login info.
+
+Use 'sudo mysql -u root -p' with the default password to login, create the initial user, database, and grant permissions.
+
+
