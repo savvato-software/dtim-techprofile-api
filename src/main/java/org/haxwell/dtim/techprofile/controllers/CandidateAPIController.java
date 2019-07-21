@@ -36,7 +36,7 @@ public class CandidateAPIController {
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		
-		return candidateService.createNewCandidate(name, email, phone, Constants.SMS);
+		return candidateService.createNewCandidate(name, phone, email, Constants.SMS);
 	}
 	
 	@RequestMapping(value = { "/api/candidate/{id}/markInAttendance" }, method=RequestMethod.POST)
