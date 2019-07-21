@@ -18,7 +18,7 @@
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 
-cd /home/quizki/src/eog-api
+cd /home/quizki/src/dtim-techprofile
 
 git pull
 
