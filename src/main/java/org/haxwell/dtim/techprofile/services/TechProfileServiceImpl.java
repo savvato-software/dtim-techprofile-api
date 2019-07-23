@@ -85,7 +85,7 @@ public class TechProfileServiceImpl implements TechProfileService {
 		
 		Long currentMaxSequenceNum = 0L;
 		
-		if (resultList.size() > 0)
+		if (resultList.size() > 0 && resultList.get(0) != null)
 			currentMaxSequenceNum = Long.parseLong(resultList.get(0).toString());
 		
 		em.createNativeQuery("INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id, sequence) VALUES (1, :topicId, :sequence)")
@@ -107,7 +107,7 @@ public class TechProfileServiceImpl implements TechProfileService {
 		
 		Long currentMaxSequenceNum = 0L;
 		
-		if (resultList.size() > 0)
+		if (resultList.size() > 0 && resultList.get(0) != null)
 			currentMaxSequenceNum = Long.parseLong(resultList.get(0).toString());
 		
 		if (topicId > 0) {
