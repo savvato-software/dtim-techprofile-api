@@ -21,8 +21,6 @@
 		</createTable>
 	</changeSet>
 	
-	<!-- WILO.. add sequence to the tech_profile_topic_line_item_map table and tech_profile_topic_map -->
-
 	<changeSet author="haxwell" id="2-v0.0.1">
 		<createTable tableName="tech_profile" catalogName="dtim_db" >
 			<column name="id" type="BIGINT(20)" autoIncrement="true">
@@ -103,7 +101,7 @@
             	"Data Structures", 
             	"Doesn't know the difference between Array and LinkedList",
             	"Able to explain and use Arrays, LinkedLists, Dictionaries etc in practical programming tasks",
-            	"Knows space and time tradeoffs of the basic data structures, Arrays vs LinkedLists, Able to explain how hashtables can be implemented and can handle collisions, Priority queues and ways to implement them etc.",
+            	"Knows space and time tradeoffs of the basic data structures, Arrays vs LinkedLists, Able to explain how hashtables can be implemented and can handle collisions, Graphs, priority queues and ways to implement them etc.",
             	"Knowledge of advanced data structures like B-trees, binomial and fibonacci heaps, AVL/Red Black trees, Splay Trees, Skip Lists, tries etc");
         </sql>
         <sql dbms="mysql">
@@ -111,13 +109,50 @@
             VALUES (2, 
             	"Algorithms", 
             	"Unable to find the average of numbers in an array",
-            	"Basic sorting, searching and data structure traversal and retrieval algorithms",
+            	"Able to explain basic sorting, searching and data structure traversal and retrieval algorithms",
             	"Tree, Graph, simple greedy and divide and conquer algorithms, is able to understand the relevance of the levels of this matrix.",
             	"Able to recognize and code dynamic programming solutions, good knowledge of graph algorithms, good knowledge of numerical computation algorithms, able to identify NP problems etc.");
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
             VALUES (3, 
+            	"Databases", 
+            	"Doesn’t know what a compiler, linker or interpreter is",
+            	"Basic understanding of compilers, linker and interpreters. Understands what assembly code is and how things work at the hardware level. Some knowledge of virtual memory and paging.",
+            	"Understands kernel mode vs. user mode, multi-threading, synchronization primitives and how they’re implemented, able to read assembly code. Understands how networks work, understanding of network protocols and socket level programming.",
+            	"Understands the entire programming stack, hardware (CPU + Memory + Cache + Interrupts + microcode), binary code, assembly, static and dynamic linking, compilation, interpretation, JIT compilation, garbage collection, heap, stack, memory addressing");
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (4, 
+            	"Coding", 
+            	"Could not bang out a bubble sort from scratch.",
+            	"Able to think through a complete solution in their head, make it real in code",
+            	"Writes DRY, SOLID code. Takes opportunities to refactor.",
+            	"Level 3"
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (5, 
+            	"Whiteboarding", 
+            	"Has never completed a real world whiteboarding interview.",
+            	"Starts in the upper left, by default. Uses tables to keep track of variable values over iterations.",
+            	"Code is syntactically correct, could run on an actual machine.",
+            	""
+        </sql>
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (6, 
+            	"Design Patterns", 
+            	"Cannot explain the concept.",
+            	"Can explain a singleton.",
+            	"Can explain several patterns, including Factory",
+            	"Gang of Four on lock, on to Enterprise Integration Patterns."
+        </sql>
+        
+        <sql dbms="mysql">
+            INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
+            VALUES (7, 
             	"Systems Programming", 
             	"Doesn’t know what a compiler, linker or interpreter is",
             	"Basic understanding of compilers, linker and interpreters. Understands what assembly code is and how things work at the hardware level. Some knowledge of virtual memory and paging.",
@@ -131,7 +166,7 @@
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
-            VALUES (4, 
+            VALUES (8, 
             	"Source Code Version Control", 
             	"Doesn't use any version control.",
             	"Can clone a repo, create branches, commit to them, push changes to a remote repo.",
@@ -140,7 +175,7 @@
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
-            VALUES (5, 
+            VALUES (9, 
             	"Build Automation", 
             	"Only knows how to build from IDE",
             	"Knows how to build the system from the command line",
@@ -149,7 +184,7 @@
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
-            VALUES (6, 
+            VALUES (10, 
             	"Automated Testing", 
             	"Thinks that all testing is the job of the tester",
             	"Has written automated unit tests and comes up with good unit test cases for the code that is being written",

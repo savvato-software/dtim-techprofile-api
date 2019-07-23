@@ -35,7 +35,7 @@
  
     </changeSet>
     
-	<changeSet author="haxwell" id="13-v0.0.1-a" context="test">
+	<changeSet author="haxwell" id="13-v0.0.1-a">
 		<sql dbms="mysql">
 			INSERT INTO question (id, text) VALUES (1, 'Describe an array.'), (2, 'Describe a linked list'), (3, 'Describe when you would use an array over a linked list, or vice versa.');
 		</sql>
@@ -44,7 +44,7 @@
 		</sql>
 	</changeSet>    
 
-	<changeSet author="haxwell" id="13-v0.0.1-b" context="test">
+	<changeSet author="haxwell" id="13-v0.0.1-b">
 		<sql dbms="mysql">
 			INSERT INTO line_item_level_question_map (tech_profile_line_item_id, tech_profile_line_item_level_index, question_id) VALUES (1, 0, 1), (1, 0, 2), (1, 0, 3);
 		</sql>
@@ -72,10 +72,6 @@
 		</createTable>
 	</changeSet>
 	
-	<!--  WILO.. Need to insert data in sessions table, then crate some grades for a given question for those session
-			so it shows up in the UI. You should be able to see past grades, and set a grade for this current session.
-			
-			 -->
 	<changeSet author="haxwell" id="15-v0.0.1" context="test">
 		<sql dbms="mysql">
 			INSERT INTO mock_interview_session (id, timestamp) VALUES (1, NOW() - INTERVAL 1 WEEK);
