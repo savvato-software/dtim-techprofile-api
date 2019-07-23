@@ -2,12 +2,12 @@ package org.haxwell.dtim.techprofile.controllers;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.haxwell.dtim.techprofile.constants.Constants;
 import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
 import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
@@ -45,22 +45,6 @@ public class TechProfileAPIController {
 		return techProfileService.addTopic(name);
 	}
 
-	public static final String L0DESCRIPTION = "l0Description";
-	public static final String L1DESCRIPTION = "l1Description";
-	public static final String L2DESCRIPTION = "l2Description";
-	public static final String L3DESCRIPTION = "l3Description";
-	
-	@RequestMapping(value = { "/api/techprofile/topics/{id}/lineitem/new" }, method=RequestMethod.POST)
-	public TechProfileLineItem newLineItem(HttpServletRequest request, @PathVariable Long id) {
-		String name = request.getParameter("lineItemName");
-		String l0desc = request.getParameter(L0DESCRIPTION);
-		String l1desc = request.getParameter(L1DESCRIPTION);
-		String l2desc = request.getParameter(L2DESCRIPTION);
-		String l3desc = request.getParameter(L3DESCRIPTION);
-		
-		return techProfileService.addLineItem(id, name, l0desc, l1desc, l2desc, l3desc);
-	}
-	
 	@RequestMapping(value = { "/api/techprofile/topic/{topicId}" }, method=RequestMethod.POST)
 	public TechProfileTopic updateTopic(HttpServletRequest request, @PathVariable Long topicId) {
 		TechProfileTopic rtn = null;
@@ -85,6 +69,22 @@ public class TechProfileAPIController {
 		return rtn;
 	}
 	
+	@RequestMapping(value = { "/api/techprofile/topics/{id}/lineitem/new" }, method=RequestMethod.POST)
+	public TechProfileLineItem newLineItem(HttpServletRequest request, @PathVariable Long id) {
+		String name = request.getParameter("lineItemName");
+		String l0desc = request.getParameter(Constants.L0DESCRIPTION);
+		String l1desc = request.getParameter(Constants.L1DESCRIPTION);
+		String l2desc = request.getParameter(Constants.L2DESCRIPTION);
+		String l3desc = request.getParameter(Constants.L3DESCRIPTION);
+		
+		if (l0desc == null) l0desc = "No skill.";
+		if (l1desc == null) l1desc = "Level 1 skill.";
+		if (l2desc == null) l2desc = "Level 2 skill.";
+		if (l3desc == null) l3desc = "Level 3 skill.";
+		
+		return techProfileService.addLineItem(id, name, l0desc, l1desc, l2desc, l3desc);
+	}
+	
 	@RequestMapping(value = { "/api/techprofile/lineitem/{lineItemId}" }, method=RequestMethod.POST)
 	public TechProfileLineItem updateLineItem(HttpServletRequest request, @PathVariable Long lineItemId) {
 		TechProfileLineItem rtn = null;
@@ -98,10 +98,10 @@ public class TechProfileAPIController {
 			rtn = techProfileService.updateLineItem(
 					Long.parseLong(obj.getAsString("id")),
 					obj.getAsString("name"),
-					obj.getAsString(L0DESCRIPTION),
-					obj.getAsString(L1DESCRIPTION),
-					obj.getAsString(L2DESCRIPTION),
-					obj.getAsString(L3DESCRIPTION));
+					obj.getAsString(Constants.L0DESCRIPTION),
+					obj.getAsString(Constants.L1DESCRIPTION),
+					obj.getAsString(Constants.L2DESCRIPTION),
+					obj.getAsString(Constants.L3DESCRIPTION));
 			
 		} catch (IOException | ParseException e) {
 			// TODO Auto-generated catch block
