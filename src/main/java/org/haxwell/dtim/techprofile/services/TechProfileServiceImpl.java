@@ -80,8 +80,13 @@ public class TechProfileServiceImpl implements TechProfileService {
 	public TechProfileTopic addTopic(String topicName) {
 		TechProfileTopic rtn = techProfileTopicRepository.save(new TechProfileTopic(topicName));
 		
-		Long currentMaxSequenceNum = Long.parseLong(em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_map where tech_profile_id=1")
-				.getResultList().get(0).toString());
+		List resultList = em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_map where tech_profile_id=1")
+				.getResultList();
+		
+		Long currentMaxSequenceNum = 0L;
+		
+		if (resultList.size() > 0)
+			currentMaxSequenceNum = Long.parseLong(resultList.get(0).toString());
 		
 		em.createNativeQuery("INSERT INTO tech_profile_topic_map (tech_profile_id, tech_profile_topic_id, sequence) VALUES (1, :topicId, :sequence)")
 			.setParameter("topicId",  rtn.getId())
@@ -96,9 +101,14 @@ public class TechProfileServiceImpl implements TechProfileService {
 	public TechProfileLineItem addLineItem(Long topicId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc) {
 		TechProfileLineItem rtn = techProfileLineItemRepository.save(new TechProfileLineItem(lineItemName, l0desc, l1desc, l2desc, l3desc));
 
-		Long currentMaxSequenceNum = Long.parseLong(em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_line_item_map where tech_profile_topic_id=:topicId")
-				.setParameter("topicId", topicId)
-				.getResultList().get(0).toString());
+		List resultList = em.createNativeQuery("SELECT max(sequence) FROM tech_profile_topic_line_item_map where tech_profile_topic_id=:topicId")
+		.setParameter("topicId", topicId)
+		.getResultList();
+		
+		Long currentMaxSequenceNum = 0L;
+		
+		if (resultList.size() > 0)
+			currentMaxSequenceNum = Long.parseLong(resultList.get(0).toString());
 		
 		if (topicId > 0) {
 			em.createNativeQuery("INSERT INTO tech_profile_topic_line_item_map (tech_profile_topic_id, tech_profile_line_item_id, sequence) VALUES (:topicId, :lineItemId, :sequence)")
