@@ -127,9 +127,9 @@
             VALUES (4, 
             	"Coding", 
             	"Could not bang out a bubble sort from scratch.",
-            	"Able to think through a complete solution in their head, make it real in code",
-            	"Writes DRY, SOLID code. Takes opportunities to refactor.",
-            	"Level 3"
+            	"Could implement the basic data structures (Linked List, Set)",
+            	"Solving basic Greedy algorithms, Dynamic programming",
+            	"Groks the Competitive Programmers Handbook");
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
@@ -138,7 +138,7 @@
             	"Has never completed a real world whiteboarding interview.",
             	"Starts in the upper left, by default. Uses tables to keep track of variable values over iterations.",
             	"Code is syntactically correct, could run on an actual machine.",
-            	""
+            	"");
         </sql>
         <sql dbms="mysql">
             INSERT INTO tech_profile_line_item (id, name, l0_description, l1_description, l2_description, l3_description)
@@ -147,7 +147,7 @@
             	"Cannot explain the concept.",
             	"Can explain a singleton.",
             	"Can explain several patterns, including Factory",
-            	"Gang of Four on lock, on to Enterprise Integration Patterns."
+            	"Gang of Four on lock, on to Enterprise Integration Patterns.");
         </sql>
         
         <sql dbms="mysql">
