@@ -69,9 +69,9 @@ public class QuestionServiceImpl implements QuestionService {
 		
 		q.setText(questionText);
 		
-		this.questionRepository.save(q);
+		Question savedQ = this.questionRepository.save(q);
 		
-		this.setAllLineItemAndLevelsFor(questionId, lilvassociations);
+		this.setAllLineItemAndLevelsFor(savedQ.getId(), lilvassociations);
 		
 		return q;
 	}
