@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="v0.0.2-1">
+		<sql dbms="mysql">
+			INSERT INTO user_role (name) VALUES ('candidate');
+			INSERT INTO user_role (name) VALUES ('client');
+		</sql>
+	</changeSet>
+    
+	<changeSet author="haxwell" id="v0.0.2-1a">
+		<addColumn tableName="user" catalogName="dtim_db">
+			<column name="phone" type="VARCHAR(32)">
+			</column>
+		</addColumn>
+		<addColumn tableName="user" catalogName="dtim_db">
+			<column name="email" type="VARCHAR(256)">
+			</column>
+		</addColumn>
+    </changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.2-2">
+		<createTable tableName="user_tech_profile_line_item_score" catalogName="dtim_db" >
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_tech_profile_line_item_score_fk1" references="user(id)"/>
+			</column>
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+				<constraints nullable="false" foreignKeyName="user_tech_profile_line_item_score_fk2" references="tech_profile_line_item(id)"/>
+			</column>
+			<column name="tech_profile_line_item_score" type="TINYINT(1)">
+			</column>
+		</createTable>
+		<addPrimaryKey catalogName="dtim_db"
+            tableName="user_tech_profile_line_item_score"
+            columnNames="user_id, tech_profile_line_item_id"
+            constraintName="pk_user_tech_profile_line_item_score"
+            />
+    </changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.2-3">
+		<createTable tableName="user_question_grade" catalogName="dtim_db" >
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_question_grade_fk1" references="user(id)"/>
+			</column>
+			<column name="session_id" type="BIGINT(20)">
+				<constraints nullable="false" foreignKeyName="user_question_grade_fk2" references="mock_interview_session(id)"/>
+			</column>
+			<column name="question_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_question_grade_fk3" references="question(id)"/>
+			</column>
+			<column name="grade" type="TINYINT(1)" defaultValue="0">
+                <constraints nullable="false"/>
+			</column>
+			<column name="comment" type="VARCHAR(6144)">
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.2-4">
+		<createTable tableName="user_attendance_history" catalogName="dtim_db" >
+			<column name="mock_interview_session_id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" foreignKeyName="user_attendance_history_fk1" references="mock_interview_session(id)"/>
+			</column>
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_attendance_history_fk2" references="user(id)"/>			
+			</column>
+            <column name="checkin_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            	<constraints nullable="false"/>
+            </column>
+		</createTable>
+    </changeSet>
+
+	<changeSet author="haxwell" id="v0.0.2-5">
+		<createTable tableName="user_tech_profile_change_history" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_tech_profile_change_history_fk1" references="user(id)"/>			
+			</column>
+			<column name="tech_profile_line_item_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_tech_profile_change_history_fk2" references="tech_profile_line_item(id)"/>			
+			</column>
+			<column name="from" type="TINYINT(1)">
+			</column>
+			<column name="to" type="TINYINT(1)">
+			</column>
+            <column name="checkin_timestamp" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+            </column>
+			<column name="comment" type="VARCHAR(1024)">
+			</column>
+		</createTable>
+    </changeSet>
+    
+	<changeSet author="haxwell" id="v0.0.2-6">
+		<dropTable tableName="client_watch" catalogName="dtim_db"/>
+		
+		<createTable tableName="client_watch" catalogName="dtim_db" >
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="client_watch_fk1" references="user(id)"/>			
+			</column>
+			<column name="line_item_set_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="client_watch_fk2" references="tech_profile_line_item_set(id)"/>
+			</column>
+		</createTable>
+
+		<addColumn tableName="tech_profile_line_item_set_line_item_map" catalogName="dtim_db">
+			<column name="tech_profile_line_item_score" type="TINYINT(1)">
+				<constraints nullable="false"/>			
+			</column>
+		</addColumn>
+    </changeSet>
+
+</databaseChangeLog>
