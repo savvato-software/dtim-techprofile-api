@@ -9,14 +9,14 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
 import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
-import org.haxwell.dtim.techprofile.repositories.CandidateTechProfileLineItemScoreRepository;
+import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.repositories.TechProfileLineItemRepository;
 import org.haxwell.dtim.techprofile.repositories.TechProfileRepository;
 import org.haxwell.dtim.techprofile.repositories.TechProfileTopicRepository;
+import org.haxwell.dtim.techprofile.repositories.UserTechProfileLineItemScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class TechProfileServiceImpl implements TechProfileService {
 	TechProfileLineItemRepository techProfileLineItemRepository;
 	
 	@Autowired
-	CandidateTechProfileLineItemScoreRepository ctplisRepository;
+	UserTechProfileLineItemScoreRepository utplisRepository;
 	
 	@Override
 	public TechProfile get(Long id) {
@@ -158,8 +158,8 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
-	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId) {
-		return ctplisRepository.findByCandidateId(candidateId);
+	public List<UserTechProfileLineItemScore> getUserIdScores(Long userId) {
+		return utplisRepository.findByUserId(userId);
 	}
 	
 	@Override
@@ -167,6 +167,8 @@ public class TechProfileServiceImpl implements TechProfileService {
 	public boolean updateSequencesRelatedToATopicAndItsLineItems(long[] arr) {
 		Optional<TechProfileTopic> opt = techProfileTopicRepository.findById(arr[1]);
 
+		// TODO: Pass JSON to the controller, and create a POJO model, instead of the array. @RequestBody
+		
 		if (opt.isPresent()) {
 			this.setTopicSequence(arr[1], arr[2]);
 			this.setLineItemSequence(arr[1], arr[3], arr[4]);

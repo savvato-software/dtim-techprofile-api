@@ -2,10 +2,10 @@ package org.haxwell.dtim.techprofile.services;
 
 import java.util.List;
 
-import org.haxwell.dtim.techprofile.entities.CandidateTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
 import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
+import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 
 public interface TechProfileService {
 
@@ -15,5 +15,6 @@ public interface TechProfileService {
 	public TechProfileLineItem updateLineItem(Long lineItemId, String lineItemName, String l0desc, String l1desc, String l2desc, String l3desc);
 	public TechProfileTopic updateTopic(Long topicId, String name);
 	public boolean updateSequencesRelatedToATopicAndItsLineItems(long[] arr);
-	public List<CandidateTechProfileLineItemScore> getCandidateIdScores(Long candidateId);
+	
+	public List<UserTechProfileLineItemScore> getUserIdScores(Long userId);
 }
