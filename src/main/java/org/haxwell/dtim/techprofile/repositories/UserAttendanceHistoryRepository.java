@@ -10,4 +10,6 @@ public interface UserAttendanceHistoryRepository extends CrudRepository<UserAtte
 
 	@Query(nativeQuery = true, value = "select * from user_attendance_history uah where uah.checkin_timestamp >= DATE_SUB(NOW(), INTERVAL 3 HOUR)")
 	public List<UserAttendanceHistory> getThoseWithinTheLastThreeHours();
+
+	public List<UserAttendanceHistory> findByUserId(Long userId);
 }
