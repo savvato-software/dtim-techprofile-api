@@ -17,6 +17,7 @@ import org.haxwell.dtim.techprofile.repositories.UserRepository;
 import org.haxwell.dtim.techprofile.repositories.UserTechProfileLineItemScoreRepository;
 import org.haxwell.dtim.techprofile.utils.ValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,38 +38,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserQuestionGradeRepository uqgRepo;
 	
-	public boolean markInAttendance(Long userId) {
-		boolean rtn = false;
-		
-		Optional<MockInterviewSession> opt = misRepo.findMostRecentlyStarted();
-		if (opt.isPresent()) {
-			rtn = uahRepo.save(new UserAttendanceHistory(opt.get().getId(), userId)) != null;
-		}
-		
-		return rtn;
-	}
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	
-	public List<User> getUsersInAttendance() {
-		
-		List<UserAttendanceHistory> cahList = uahRepo.getThoseWithinTheLastThreeHours();
-
-		List<User> rtn = new ArrayList<>();
-               
-		Iterator<UserAttendanceHistory> iterator = cahList.iterator();
-		while (iterator.hasNext()) {
-			rtn.add(userRepo.findById(iterator.next().getUserId()).get());
-		}
-
-		return rtn;
-	}
-
 	public User createNewUser(String name, String password, String phone, String email, String preferredContactMethod) {
-		if (ValidationUtil.isPhoneValid(phone) && ValidationUtil.isEmailValid(email) && name.length() >= 3) {
+		if (password != null && ValidationUtil.isPhoneValid(phone) && ValidationUtil.isEmailValid(email) && name.length() >= 3) {
 			
 			Optional<User> opt = this.userRepo.findByNamePhoneOrEmail(name, phone, email);
 			
 			if (!opt.isPresent()) {
-				User user = new User(name, password, phone, email);
+				User user = new User(name, passwordEncoder.encode(password), phone, email);
 				
 				User rtn = userRepo.save(user);
 				
@@ -100,6 +79,31 @@ public class UserServiceImpl implements UserService {
 		
 		if (opt.isPresent())
 			rtn = opt.get();
+		
+		return rtn;
+	}
+	
+	public boolean markInAttendance(Long userId) {
+		boolean rtn = false;
+		
+		Optional<MockInterviewSession> opt = misRepo.findMostRecentlyStarted();
+		if (opt.isPresent()) {
+			rtn = uahRepo.save(new UserAttendanceHistory(opt.get().getId(), userId)) != null;
+		}
+		
+		return rtn;
+	}
+	
+	public List<User> getUsersInAttendance() {
+		
+		List<UserAttendanceHistory> cahList = uahRepo.getThoseWithinTheLastThreeHours();
+		
+		List<User> rtn = new ArrayList<>();
+		
+		Iterator<UserAttendanceHistory> iterator = cahList.iterator();
+		while (iterator.hasNext()) {
+			rtn.add(userRepo.findById(iterator.next().getUserId()).get());
+		}
 		
 		return rtn;
 	}
