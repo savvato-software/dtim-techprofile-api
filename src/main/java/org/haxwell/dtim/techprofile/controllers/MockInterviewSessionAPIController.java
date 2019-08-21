@@ -5,28 +5,28 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.haxwell.dtim.techprofile.entities.MockInterviewSession;
-import org.haxwell.dtim.techprofile.services.AdminService;
+import org.haxwell.dtim.techprofile.services.MockInterviewSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AdminAPIController {
+public class MockInterviewSessionAPIController {
 
 	@Autowired
-	AdminService adminService;
+	MockInterviewSessionService adminService;
 	
-	AdminAPIController() {
+	MockInterviewSessionAPIController() {
 		
 	}
 	
-	@RequestMapping(value = { "/api/admin/createSession" }, method=RequestMethod.POST)
+	@RequestMapping(value = { "/api/mockinterviewsession/create" }, method=RequestMethod.POST)
 	public MockInterviewSession createSession(HttpServletRequest request) {
 		return adminService.createNewSession();
 	}
 	
-	@RequestMapping(value = { "/api/admin/lastSession" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/api/mockinterviewsession/mostrecent" }, method=RequestMethod.GET)
 	public MockInterviewSession getLastSession(HttpServletRequest request) {
 		Optional<MockInterviewSession> opt = adminService.getLastSession();
 		

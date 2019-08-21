@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.haxwell.dtim.techprofile.entities.MockInterviewSession;
 
-public interface AdminService {
+public interface MockInterviewSessionService {
 	public MockInterviewSession createNewSession();
 	
 	public Optional<MockInterviewSession> getLastSession();	
