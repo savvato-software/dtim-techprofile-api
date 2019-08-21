@@ -12,6 +12,8 @@ import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.services.TechProfileService;
 import org.haxwell.dtim.techprofile.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,13 +33,19 @@ public class UserAPIController {
 	}
 	
 	@RequestMapping(value = { "/api/user/new" }, method=RequestMethod.POST)
-	public User createCandidate(HttpServletRequest request) {
+	public ResponseEntity<User> createUser(HttpServletRequest request) {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		
-		return userService.createNewUser(name, password, phone, email, Constants.SMS);
+		User user = userService.createNewUser(name, password, phone, email, Constants.SMS);
+		
+		if (user == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		}
 	}
 	
 	@RequestMapping(value = { "/api/user/{userId}/markInAttendance" }, method=RequestMethod.POST)
