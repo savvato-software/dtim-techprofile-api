@@ -36,6 +36,10 @@ public class UserPrincipal implements UserDetails {
         }
         return authorities;
     }
+    
+    public User getUser() {
+    	return this.user;
+    }
 
     public Long getId() {
     	return user != null ? user.getId() : null;

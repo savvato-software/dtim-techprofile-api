@@ -50,10 +50,7 @@ public class AuthenticateController {
 		sc.setAuthentication(auth);		
 		
 		if (sc.getAuthentication().isAuthenticated()) {
-			User user = new User();
-			user.setId(((UserPrincipal)auth.getPrincipal()).getId());
-			
-			return user;
+			return ((UserPrincipal)auth.getPrincipal()).getUser();
 		} else {
 			throw new BadCredentialsException("Could not find a user with the given name and password.");
 		}
