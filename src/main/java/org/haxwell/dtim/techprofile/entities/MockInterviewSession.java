@@ -21,8 +21,8 @@ public class MockInterviewSession {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-    private java.sql.Timestamp timestamp;
+
+	private java.sql.Timestamp timestamp;
 
     public java.sql.Timestamp getTimestamp() {
         return timestamp;

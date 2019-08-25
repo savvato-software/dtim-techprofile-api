@@ -9,6 +9,7 @@ import org.haxwell.dtim.techprofile.constants.Constants;
 import org.haxwell.dtim.techprofile.entities.User;
 import org.haxwell.dtim.techprofile.entities.UserQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
+import org.haxwell.dtim.techprofile.services.MockInterviewSessionService;
 import org.haxwell.dtim.techprofile.services.TechProfileService;
 import org.haxwell.dtim.techprofile.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class UserAPIController {
 	
 	@Autowired
 	TechProfileService techProfileService;
+	
+	@Autowired
+	MockInterviewSessionService mockInterviewSessionService;
 	
 	UserAPIController() {
 		
@@ -50,7 +54,7 @@ public class UserAPIController {
 	
 	@RequestMapping(value = { "/api/user/{userId}/markInAttendance" }, method=RequestMethod.POST)
 	public boolean markInAttendance(@PathVariable Long userId) {
-		return userService.markInAttendance(userId);
+		return mockInterviewSessionService.markInAttendance(userId);
 	}
 	
 	@RequestMapping(value = { "/api/user" }, method=RequestMethod.GET)
@@ -63,11 +67,6 @@ public class UserAPIController {
 	@RequestMapping(value = { "/api/user/{id}" }, method=RequestMethod.GET)
 	public User search(@PathVariable Long id) {
 		return userService.findById(id);
-	}
-	
-	@RequestMapping(value = { "/api/user/in-attendance" }, method=RequestMethod.GET)
-	public List<User> getUsersInAttendance() {
-		return userService.getUsersInAttendance();
 	}
 	
 	@RequestMapping(value = { "/api/user/{id}/techprofile/scores" }, method=RequestMethod.GET)

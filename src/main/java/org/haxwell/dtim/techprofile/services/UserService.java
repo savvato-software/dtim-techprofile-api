@@ -9,11 +9,8 @@ import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 public interface UserService {
 	public User createNewUser(String name, String password, String phone, String email, String preferredContactMethod);
 
-	public boolean markInAttendance(Long userId);
 	public boolean saveScores(List<UserTechProfileLineItemScore> scores);
 	public UserQuestionGrade setGradeForQuestion(Long userId, Long sessionId, Long questionId, Long grade, String comment);
-	
-	public List<User> getUsersInAttendance();
 	
 	public List<UserQuestionGrade> getUserQuestionHistory(Long userId, Long questionId);
 	

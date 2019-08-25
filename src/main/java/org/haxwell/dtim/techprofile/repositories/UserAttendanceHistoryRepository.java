@@ -12,4 +12,6 @@ public interface UserAttendanceHistoryRepository extends CrudRepository<UserAtte
 	public List<UserAttendanceHistory> getThoseWithinTheLastThreeHours();
 
 	public List<UserAttendanceHistory> findByUserId(Long userId);
+	
+	public List<UserAttendanceHistory> findByMockInterviewSessionId(Long sessionId);
 }

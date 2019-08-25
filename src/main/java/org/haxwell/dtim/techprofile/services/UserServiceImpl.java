@@ -1,13 +1,9 @@
 package org.haxwell.dtim.techprofile.services;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-import org.haxwell.dtim.techprofile.entities.MockInterviewSession;
 import org.haxwell.dtim.techprofile.entities.User;
-import org.haxwell.dtim.techprofile.entities.UserAttendanceHistory;
 import org.haxwell.dtim.techprofile.entities.UserQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.repositories.MockInterviewSessionRepository;
@@ -79,31 +75,6 @@ public class UserServiceImpl implements UserService {
 		
 		if (opt.isPresent())
 			rtn = opt.get();
-		
-		return rtn;
-	}
-	
-	public boolean markInAttendance(Long userId) {
-		boolean rtn = false;
-		
-		Optional<MockInterviewSession> opt = misRepo.findMostRecentlyStarted();
-		if (opt.isPresent()) {
-			rtn = uahRepo.save(new UserAttendanceHistory(opt.get().getId(), userId)) != null;
-		}
-		
-		return rtn;
-	}
-	
-	public List<User> getUsersInAttendance() {
-		
-		List<UserAttendanceHistory> cahList = uahRepo.getThoseWithinTheLastThreeHours();
-		
-		List<User> rtn = new ArrayList<>();
-		
-		Iterator<UserAttendanceHistory> iterator = cahList.iterator();
-		while (iterator.hasNext()) {
-			rtn.add(userRepo.findById(iterator.next().getUserId()).get());
-		}
 		
 		return rtn;
 	}
