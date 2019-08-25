@@ -12,6 +12,8 @@ BACKUP_SERVER_USER=pi
 BACKUP_SERVER_HOME=/home/$BACKUP_SERVER_USER
 FILES=/home/quizki/$HAX_APP_NAME-backups
 
+# NOTE If this script is FAILING, its probably because the authorized hosts (or something) is not set up. Just do the 'scp' command below manually, and it will get added. The script should flow after that.
+
 cd $FILES
 for f in ./*.tar.gz; do
 scp $f $BACKUP_SERVER_USER@$BACKUP_SERVER_IP:$BACKUP_SERVER_HOME/$HAX_APP_NAME-backup/$f
