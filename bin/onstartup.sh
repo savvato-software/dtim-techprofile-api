@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# Be sure too, that the git repo this server is building off of is the correct one..
+# HAXWELL INFRASTRUCTURE - Update and Start The Backend
+----
+
+# Be sure that the branch of the git repo that this server is building off of is the correct one..
 #  Master for PROD, Develop for STAGING, and the local dev branch for DEV
 
 # 
@@ -18,21 +21,13 @@
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 
-cd /home/quizki/src/dtim-techprofile
+cd /home/quizki/src/$HAX_APP_NAME
 
 git pull
-
-# SEE https://stackoverflow.com/questions/29889074/how-to-wait-for-first-command-to-finish
-#
-# This mysql command isn't running like it should, I think its not waiting for GitPull to 
-# finish? I dunno. But anyway, this is where I left off. But, should verify this script even
-# runs. the cat ./src... part I mean.
-
-# COMMENTED this out 2018-05-26, don't want to refresh the DB on startup.
-#mysql -e "`cat ./src/main/resources/META-INF/sql/init_eog_db.sql`"
 
 export JAVA_HOME=/home/quizki/apps/java
 mvn spring-boot:run > out &
 
 exit 0;
+
 
