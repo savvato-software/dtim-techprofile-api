@@ -28,12 +28,62 @@ sudo iptables -A INPUT -j DROP
 
 if you haven't already installed it, you will need to "sudo apt-get install iptables-persistent" to persist the iptables changes.
 
+-- RUN THESE
+
+sudo apt-get update
+sudo apt-get upgrade
+
+sudo adduser quizki --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password && echo "quizki:password" 
+| sudo chpasswd && sudo adduser quizki sudo
+
+mkdir /home/quizki/.ssh
+
+# then log off, and, on localhost, run....
+cat ~/.ssh/id_rsa.pub | ssh root@[your.ip.address.here] "cat >> ~/.ssh/authorized_keys"
+
+# You should now be able to ssh as quizki@...
+ssh quizki@[the.ip.address]
+
+mkdir ~/apps
+
+#INSTALL ORACLE JAVA
+#  At present, there is no better way to install Oracle Java than to download it from Oracle, and then upload to the server. Tried to get the command line way working, and eventually, the command line was like making it pretty and gFTP uploading the file was like making it work. So..
+#  Should be installed at ~/apps/java. For instance, ~/apps/java/bin should be a valid path. No symbolic links or directories named after the version number. Just ~/apps/java/bin
+
+#SET JAVA_HOME
+export JAVA_HOME=/home/quizki/apps/java
+PATH="$JAVA_HOME/bin:$HOME/bin:$HOME/.local/bin:$PATH"
+
+
+#INSTALL MYSQL
+sudo apt install mysql-server
+
+#SSH
+Use gFTP or the like to copy id_rsa and id_rsa.pub to /home/quizki/.ssh
+
+#INSTALL MAVEN
+sudo apt install maven
 
 
 -- DATABASE INITIAL SETUP
+#MYSQL Auto-login file
+If its not already present create a file like the following, and call it ~/.my.cnf
 
-You may need to rename out of the way the file ~/.my.cnf which provides default login info.
+#--BEGIN--
+[client]
+user=springuser_XXXX
+password=ThePassword
+#--END--
 
-Use 'sudo mysql -u root -p' with the default password to login, create the initial user, database, and grant permissions.
+- Use 'sudo mysql -u root -p' with the default password to login, create the initial user, database, and grant permissions.
 
+- Create the 'dtim_db' database.
+
+
+
+-- DATABASE MIGRATIONS
+These are handled by Liquibase, each time our server starts. Define new migrations in the Resources folder. Add to the master.XML file, and there you go.
+
+-- REFRESHING THE DATABASE
+You should be able to just drop dtim_db, and restart the server. Liquibase migrations should run and rebuild it all for you.
 
