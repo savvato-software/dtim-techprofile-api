@@ -25,7 +25,7 @@ cd /home/quizki/src/$HAX_APP_NAME
 
 git pull
 
-export JAVA_HOME=/home/quizki/apps/java
+export JAVA_HOME=/home/quizki/apps/java/current
 mvn spring-boot:run > out &
 
 exit 0;
