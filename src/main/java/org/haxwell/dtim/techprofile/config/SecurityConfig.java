@@ -93,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrf().disable()
                     .cors()
                     .and()
-                    .anonymous().disable()
+                    //.anonymous().disable()
                     .requestMatchers()
                     .antMatchers(URLS)
                     .antMatchers(POST, "/api/user/new")

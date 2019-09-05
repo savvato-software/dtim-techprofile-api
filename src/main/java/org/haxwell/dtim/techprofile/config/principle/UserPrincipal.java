@@ -29,7 +29,7 @@ public class UserPrincipal implements UserDetails {
         if (CollectionUtils.isNotEmpty(roles)) {
             roles.forEach(role -> {
                 if (role != null) {
-                	System.out.println("-=-=-=" + role.getName());
+                	System.out.println("User has role [" + role.getName() + "]");
                 	authorities.add(new SimpleGrantedAuthority(role.getName()));
                 }
             });

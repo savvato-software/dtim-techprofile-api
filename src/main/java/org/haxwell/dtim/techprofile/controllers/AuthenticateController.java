@@ -50,8 +50,12 @@ public class AuthenticateController {
 		sc.setAuthentication(auth);		
 		
 		if (sc.getAuthentication().isAuthenticated()) {
+			logger.info("*** Successfully logged in [" + arr[0] + "]");
+			System.out.println("*** Successfully logged in [" + arr[0] + "]");
 			return ((UserPrincipal)auth.getPrincipal()).getUser();
 		} else {
+			logger.info("*** Could not log in [" + arr[0] + "] with the given password.");
+			System.out.println("*** Could not log in [" + arr[0] + "] with the given password.");
 			throw new BadCredentialsException("Could not find a user with the given name and password.");
 		}
 	}
