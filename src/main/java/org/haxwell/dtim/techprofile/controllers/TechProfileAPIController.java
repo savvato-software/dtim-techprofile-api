@@ -153,5 +153,10 @@ public class TechProfileAPIController {
 		return true;
 	}
 	
-	
+	@RequestMapping(value = { "/api/techprofile/questionCountsPerCell" }, method=RequestMethod.GET)
+	public List getQuestionCountsPerTechProfileCell() {
+		List list = techProfileService.getQuestionCountsPerCell();
+		
+		return list;
+	}
 }

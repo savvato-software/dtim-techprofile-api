@@ -243,4 +243,13 @@ public class TechProfileServiceImpl implements TechProfileService {
 
 		return rtn;
 	}
+	
+	/**** *** ***/
+	
+	public List getQuestionCountsPerCell() {
+		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * from line_item_level_question_map lilqm where lilqm.tech_profile_line_item_id in (select tech_profile_line_item_id from tech_profile_topic_line_item_map tptlim where tptlim.tech_profile_topic_id in (select tech_profile_topic_id from tech_profile_topic_map where tech_profile_id = 1))) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
+				.getResultList();
+		
+		return resultList;
+	}
 }

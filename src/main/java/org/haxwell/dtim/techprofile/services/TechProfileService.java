@@ -17,4 +17,6 @@ public interface TechProfileService {
 	public boolean updateSequencesRelatedToATopicAndItsLineItems(long[] arr);
 	
 	public List<UserTechProfileLineItemScore> getUserIdScores(Long userId);
+	
+	public List getQuestionCountsPerCell();
 }
