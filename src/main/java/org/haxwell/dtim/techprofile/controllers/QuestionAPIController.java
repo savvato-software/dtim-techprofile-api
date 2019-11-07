@@ -1,7 +1,6 @@
 package org.haxwell.dtim.techprofile.controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +34,7 @@ public class QuestionAPIController {
 	}
 	
 	@RequestMapping(value = { "/api/question/{questionId}/lineitem/levels" }, method=RequestMethod.GET)
-	public Iterable<Question> getAllLineItemLevelsAssociatedWithTheGivenQuestion(@PathVariable Long questionId) {
+	public Iterable getAllLineItemLevelsAssociatedWithTheGivenQuestion(@PathVariable Long questionId) {
 		return questionService.getAllLineItemAndLevelsFor(questionId);
 	}
 	
@@ -60,15 +59,13 @@ public class QuestionAPIController {
 	}
 	
 	@RequestMapping(value = { "/api/question/{id}"}, method=RequestMethod.GET)
-	public Iterable<Question> getById(@PathVariable String id) {
-		if ("all".equals(id)) {
-			return questionService.getAll();
-		} else {
-			ArrayList<Question> rtn = new ArrayList<Question>();
-			rtn.add(questionService.getById(Long.parseLong(id)).get());
-			
-			return rtn;
-		}
+	public Question getById(@PathVariable String id) {
+		return questionService.getById(Long.parseLong(id)).get();
+	}
+	
+	@RequestMapping(value = { "/api/question/all"}, method=RequestMethod.GET)
+	public Iterable<Question> getAllById(@PathVariable String id) {
+		return questionService.getAll();
 	}
 	
 	@RequestMapping(value = { "/api/question/save"}, method=RequestMethod.POST)
@@ -107,5 +104,5 @@ public class QuestionAPIController {
 		}
 
 		return rtn;
-	}
+	}	
 }
