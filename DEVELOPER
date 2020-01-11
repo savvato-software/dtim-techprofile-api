@@ -77,8 +77,9 @@ password=ThePassword
 
 - Use 'sudo mysql -u root -p' with the default password to login, create the initial user, database, and grant permissions.
 
-- Create the 'dtim_db' database.
-
+    CREATE DATABASE dtim_db;
+    CREATE USER 'springuser_dtim'@'localhost' IDENTIFIED BY 'ThePassword';
+    GRANT ALL ON dtim_db.* TO 'springuser_dtim'@'localhost';
 
 
 -- DATABASE MIGRATIONS
