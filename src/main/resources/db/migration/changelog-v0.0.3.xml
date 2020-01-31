@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="v0.0.3-1" context="test">
+        <sql dbms="mysql">
+            INSERT INTO user (name, password, enabled)
+            VALUES ("dave", 
+            	"$2a$10$wGcNuV0Kodg7uz6qI/l/1uz1mMcpmAGZqfuZ3JxY9cAeejtYXUbWC",
+            	"1");
+        </sql>
+        
+        <!-- NOTE the password for Dave, and the password for Admin, is 'admin' -->
+        
+    </changeSet>
+    
+	<changeSet author="haxwell" id="v0.0.3-2" context="test">
+	    <insert tableName="user_user_role_map">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="user_role_id" value="3"/>
+	    </insert>
+	</changeSet>    
+
+</databaseChangeLog>
