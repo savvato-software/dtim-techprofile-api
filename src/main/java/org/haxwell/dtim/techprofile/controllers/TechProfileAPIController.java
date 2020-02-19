@@ -77,10 +77,10 @@ public class TechProfileAPIController {
 		String l2desc = request.getParameter(Constants.L2DESCRIPTION);
 		String l3desc = request.getParameter(Constants.L3DESCRIPTION);
 		
-		if (l0desc == null) l0desc = "No skill.";
-		if (l1desc == null) l1desc = "Level 1 skill.";
-		if (l2desc == null) l2desc = "Level 2 skill.";
-		if (l3desc == null) l3desc = "Level 3 skill.";
+		if (l0desc == null) l0desc = "Level 1 skill.";
+		if (l1desc == null) l1desc = "Level 2 skill.";
+		if (l2desc == null) l2desc = "Level 3 skill.";
+		if (l3desc == null) l3desc = "Level 4 skill.";
 		
 		return techProfileService.addLineItem(id, name, l0desc, l1desc, l2desc, l3desc);
 	}
