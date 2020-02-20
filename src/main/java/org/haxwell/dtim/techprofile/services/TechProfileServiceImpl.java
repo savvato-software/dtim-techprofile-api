@@ -171,7 +171,9 @@ public class TechProfileServiceImpl implements TechProfileService {
 		
 		if (opt.isPresent()) {
 			this.setTopicSequence(arr[1], arr[2]);
-			this.setLineItemSequence(arr[1], arr[3], arr[4]);
+			
+			if (arr[3] > 0 && arr[4] > 0)
+				this.setLineItemSequence(arr[1], arr[3], arr[4]);
 		}
 		
 		return true;
