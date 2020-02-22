@@ -159,4 +159,11 @@ public class TechProfileAPIController {
 		
 		return list;
 	}
+	
+	@RequestMapping(value = { "/api/techprofile/user/{userId}/correctlyAnsweredQuestionCountsPerCell" }, method=RequestMethod.GET)
+	public List getCorrectlyAnsweredQuestionCountsPerCell(@PathVariable Long userId) {
+		List list = techProfileService.getCorrectlyAnsweredQuestionCountsPerCell(userId);
+		
+		return list;
+	}
 }

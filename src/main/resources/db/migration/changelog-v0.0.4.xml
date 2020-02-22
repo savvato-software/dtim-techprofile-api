@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="v0.0.4-0" context="test">
+        <sql dbms="mysql">
+            UPDATE user
+            SET phone="3035551212", email="dave@dave.com"
+            WHERE name="dave"; 
+        </sql>
+    </changeSet>
+    
+	<changeSet author="haxwell" id="v0.0.4-1" context="test">
+		<sql dbms="mysql">
+			INSERT INTO mock_interview_session (id, timestamp) VALUES (2, NOW() - INTERVAL 2 WEEK);
+			INSERT INTO mock_interview_session (id, timestamp) VALUES (3, NOW() - INTERVAL 3 WEEK);
+			INSERT INTO mock_interview_session (id, timestamp) VALUES (4, NOW() - INTERVAL 4 WEEK);
+		</sql>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.4-2" context="test">
+	    <insert tableName="user_attendance_history">
+	        <column name="mock_interview_session_id" value="2"/>
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="checkin_timestamp" valueComputed="(SELECT NOW() - INTERVAL 2 WEEK)"/>
+	    </insert>
+	    <insert tableName="user_attendance_history">
+	        <column name="mock_interview_session_id" value="3"/>
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="checkin_timestamp" valueComputed="(SELECT NOW() - INTERVAL 3 WEEK)"/>
+	    </insert>
+	    <insert tableName="user_attendance_history">
+	        <column name="mock_interview_session_id" value="4"/>
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="checkin_timestamp" valueComputed="(SELECT NOW() - INTERVAL 4 WEEK)"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.4-3" context="test">
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="2"/>
+	        <column name="question_id" value="1"/>
+	        <column name="grade" value="2"/>
+	        <column name="comment" value="nailed it"/>
+	    </insert>
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="2"/>
+	        <column name="question_id" value="2"/>
+	        <column name="grade" value="0"/>
+	        <column name="comment" value="no data structures knowledge"/>
+	    </insert>
+
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="3"/>
+	        <column name="question_id" value="2"/>
+	        <column name="grade" value="2"/>
+	        <column name="comment" value="went home studied, came back, nailed it"/>
+	    </insert>
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="3"/>
+	        <column name="question_id" value="4"/>
+	        <column name="grade" value="0"/>
+	        <column name="comment" value="could not solve this basic coding problem"/>
+	    </insert>
+
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="4"/>
+	        <column name="question_id" value="4"/>
+	        <column name="grade" value="1"/>
+	        <column name="comment" value="better, but needed some help on this coding problem"/>
+	    </insert>
+	    <insert tableName="user_question_grade">
+	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
+	        <column name="session_id" value="4"/>
+	        <column name="question_id" value="4"/>
+	        <column name="grade" value="2"/>
+	        <column name="comment" value="intuitively nailed this algorithm question"/>
+	    </insert>
+	</changeSet>
+
+</databaseChangeLog>

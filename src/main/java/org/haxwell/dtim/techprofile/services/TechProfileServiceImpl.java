@@ -249,9 +249,50 @@ public class TechProfileServiceImpl implements TechProfileService {
 	/**** *** ***/
 	
 	public List getQuestionCountsPerCell() {
+
+		// For all of the questions associated with each lineItemLevel
+        // where a line item
+        // belongs to a topic
+        //  that in turn belongs to tech profile
+        //  	with id = 1
+		//
+		//	Count all of the times any question is associated with a given lineItem and Level
+
 		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * from line_item_level_question_map lilqm where lilqm.tech_profile_line_item_id in (select tech_profile_line_item_id from tech_profile_topic_line_item_map tptlim where tptlim.tech_profile_topic_id in (select tech_profile_topic_id from tech_profile_topic_map where tech_profile_id = 1))) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
 				.getResultList();
 		
+		return resultList;
+	}
+
+	/**** *** ***/
+	public List getCorrectlyAnsweredQuestionCountsPerCell(Long userId) {	
+		
+		// Get the question_id of every question this user has correctly answered
+		
+		//	Count all of the times a question is associated with a given lineItem and Level		
+		
+		// TODO: When the time comes, we can limit this query to only a subset of the sessions they were in by adding "...AND SESSION_ID < ?1"
+		
+		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * FROM line_item_level_question_map lilqm WHERE lilqm.question_id IN (SELECT DISTINCT(question_id) FROM user_question_grade WHERE user_id=:userId AND grade=2)) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
+				.setParameter("userId", userId)
+				.getResultList();
+
+		return resultList;
+	}
+
+	/**** *** ***/
+	public List getIncorrectlyAnsweredQuestionCountsPerCell(Long userId) {	
+		
+		// Get the question_id of every question this user has correctly answered
+		
+		// TODO.. add the condition that the user did not subsequently, within the given time frame, answer the question correctly. IOW, during this time, as far as we knew they did not know how to answer that question.
+		
+		//	Count all of the times a question is associated with a given lineItem and Level		
+		
+		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * FROM line_item_level_question_map lilqm WHERE lilqm.question_id IN (SELECT DISTINCT(question_id) FROM user_question_grade WHERE user_id=:userId AND (grade=0 OR grade=1))) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
+				.setParameter("userId", userId)
+				.getResultList();
+
 		return resultList;
 	}
 }

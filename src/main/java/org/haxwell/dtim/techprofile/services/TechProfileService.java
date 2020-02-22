@@ -19,4 +19,5 @@ public interface TechProfileService {
 	public List<UserTechProfileLineItemScore> getUserIdScores(Long userId);
 	
 	public List getQuestionCountsPerCell();
+	public List getCorrectlyAnsweredQuestionCountsPerCell(Long userId);
 }
