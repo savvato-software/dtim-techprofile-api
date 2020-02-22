@@ -1,3 +1,32 @@
+***********************
+***********************
+In general, this is how you set up a new backend instance
+--
+
+Be sure you've installed
+
+Oracle Java
+Apache Maven
+MySQL
+
+You will need to create an initial empty database, and a user which can access it. From the MySQL console, run
+--
+CREATE DATABASE dtim_db;
+CREATE USER 'springuser_dtim'@'localhost' IDENTIFIED BY 'ThePassword';
+GRANT ALL ON dtim_db.* TO 'springuser_dtim'@'localhost';
+--
+
+Ensure you are at the root of the dtim-techprofile-api project, and run the backend with
+--
+mvn spring-boot:run
+
+***********************
+***********************
+
+Ask a lead for more help if the above instructions don't get you there.
+
+What follows here are notes on setting up the backend in the cloud. Which you are probably not doing. So ignore the rest of this file. :)
+
 New Droplet Setup Notes
 -----------
 
