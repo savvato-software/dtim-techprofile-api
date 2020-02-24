@@ -80,7 +80,7 @@
 	    <insert tableName="user_question_grade">
 	        <column name="user_id" valueComputed="(SELECT id from user where name='dave')"/>
 	        <column name="session_id" value="4"/>
-	        <column name="question_id" value="4"/>
+	        <column name="question_id" value="5"/>
 	        <column name="grade" value="2"/>
 	        <column name="comment" value="intuitively nailed this algorithm question"/>
 	    </insert>
