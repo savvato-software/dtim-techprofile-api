@@ -1,5 +1,6 @@
 package org.haxwell.dtim.techprofile.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,23 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public Optional<Question> getById(Long id) {
 		return this.questionRepository.findById(id);
+	}
+	
+	@Override
+	public Iterable<Question> getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId) {
+		List resultList = em.createNativeQuery("SELECT uqg.question_id FROM user_question_grade uqg WHERE uqg.user_id=:userId AND uqg.grade=2 AND uqg.question_id IN (SELECT lilqm.question_id FROM line_item_level_question_map lilqm WHERE lilqm.tech_profile_line_item_id=:lineItemId and lilqm.tech_profile_line_item_level_index=:levelIndex);")
+				.setParameter("userId", userId)
+				.setParameter("lineItemId", lineItemId)
+				.setParameter("levelIndex", lineItemLevel)
+				.getResultList();
+
+		ArrayList<Long> list = new ArrayList<>();
+		
+		for (int i = 0; i < resultList.size(); i++) {
+			list.add(Long.parseLong((resultList.get(i) + "")));
+		}
+		
+		return this.questionRepository.findByIdIn(list);
 	}
 	
 	@Override

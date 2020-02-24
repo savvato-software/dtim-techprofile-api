@@ -33,6 +33,11 @@ public class QuestionAPIController {
 		return questionService.getByLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex);
 	}
 	
+	@RequestMapping(value = { "/api/question/{lineItemLevelId}/{lineItemLevelIndex}/user/{userId}/correctlyAnsweredQuestions" }, method=RequestMethod.GET)
+	public Iterable<Question> getCorrectlyAnsweredQuestions(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
+		return questionService.getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex, userId);
+	}
+	
 	@RequestMapping(value = { "/api/question/{questionId}/lineitem/levels" }, method=RequestMethod.GET)
 	public Iterable getAllLineItemLevelsAssociatedWithTheGivenQuestion(@PathVariable Long questionId) {
 		return questionService.getAllLineItemAndLevelsFor(questionId);

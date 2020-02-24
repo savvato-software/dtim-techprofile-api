@@ -3,6 +3,7 @@ package org.haxwell.dtim.techprofile.controllers;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,16 @@ public class TechProfileAPIController {
 		if (l3desc == null) l3desc = "Level 4 skill.";
 		
 		return techProfileService.addLineItem(id, name, l0desc, l1desc, l2desc, l3desc);
+	}
+	
+	@RequestMapping(value = { "/api/techprofile/lineitem/{lineItemId}" }, method=RequestMethod.GET)
+	public TechProfileLineItem getLineItem(HttpServletRequest request, @PathVariable Long lineItemId) {
+		Optional<TechProfileLineItem> rtn = this.techProfileService.getLineItem(lineItemId);
+		
+		if (rtn.isPresent())
+			return rtn.get();
+		else
+			return null;
 	}
 	
 	@RequestMapping(value = { "/api/techprofile/lineitem/{lineItemId}" }, method=RequestMethod.POST)

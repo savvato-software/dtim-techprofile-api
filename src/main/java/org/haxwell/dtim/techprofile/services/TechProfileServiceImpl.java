@@ -122,6 +122,11 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 	
 	@Override
+	public Optional<TechProfileLineItem> getLineItem(Long lineItemId) {
+		return techProfileLineItemRepository.findById(lineItemId);
+	}
+	
+	@Override
 	public TechProfileTopic updateTopic(Long topicId, String name) {
 		Optional<TechProfileTopic> opt = techProfileTopicRepository.findById(topicId);
 		TechProfileTopic rtn = null;
