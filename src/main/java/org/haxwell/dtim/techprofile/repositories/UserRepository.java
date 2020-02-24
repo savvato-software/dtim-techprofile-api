@@ -14,6 +14,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	Optional<User> findByName(String name);
 	Optional<User> findByNameAndPassword(String name, String password);
 	
-	@Query(nativeQuery = true, value = "select u.* from user u where u.phone like %?1% or u.email like %?1% LIMIT 1")
+	@Query(nativeQuery = true, value = "select u.* from user u where u.phone=?1 or u.email=?1 LIMIT 1")
 	Optional<User> findByPhoneOrEmail(String query);
 }
