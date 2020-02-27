@@ -31,8 +31,25 @@ public class Question {
 		this.text = text;
 	}
 	
+	///
+	private String description;
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	///
 	public Question(String text) {
 		this.text = text;
+	}
+	
+	public Question(String text, String description) {
+		this.text = text;
+		this.description = description;
 	}
 	
 	public Question() {

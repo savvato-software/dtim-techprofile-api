@@ -17,5 +17,5 @@ public interface QuestionService {
 	
 	void setAllLineItemAndLevelsFor(Long questionId, int[][] arr);
 	
-	Question save(Long questionId, String questionText, int[][] lilvassociations);
+	Question save(Long questionId, String questionText, String questionDescription, int[][] lilvassociations);
 }

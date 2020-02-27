@@ -101,6 +101,7 @@ public class QuestionAPIController {
 			rtn = questionService.save(
 					Long.parseLong(q.getAsString("id")),
 					q.getAsString("text"),
+					q.getAsString("description"),
 					lilvassociations);
 			
 		} catch (IOException | ParseException e) {

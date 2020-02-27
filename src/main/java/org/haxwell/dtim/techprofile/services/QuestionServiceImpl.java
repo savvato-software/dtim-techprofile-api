@@ -75,7 +75,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Transactional
-	public Question save(Long questionId, String questionText, int[][] lilvassociations) {
+	public Question save(Long questionId, String questionText, String questionDescription, int[][] lilvassociations) {
 		Optional<Question> opt = this.questionRepository.findById(questionId);
 		Question q; 
 		
@@ -86,6 +86,7 @@ public class QuestionServiceImpl implements QuestionService {
 		}
 		
 		q.setText(questionText);
+		q.setDescription(questionDescription);
 		
 		Question savedQ = this.questionRepository.save(q);
 		
