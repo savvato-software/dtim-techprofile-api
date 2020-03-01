@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="haxwell" id="v0.0.6-0">
+		<createTable tableName="career_goal" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="path" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="milestone" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="labour" catalogName="dtim_db" >
+			<column name="id" type="BIGINT(20)" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true"/>			
+			</column>
+			<column name="name" type="VARCHAR(128)">
+				<constraints nullable="false"/>			
+			</column>
+		</createTable>
+		
+		<createTable tableName="career_goal_path_map" catalogName="dtim_db" >
+			<column name="career_goal_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="career_goal_path_map_fk1" references="career_goal(id)"/>			
+			</column>
+			<column name="path_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="career_goal_path_map_fk2" references="path(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="path_milestone_map" catalogName="dtim_db" >
+			<column name="path_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="path_milestone_map_fk1" references="path(id)"/>			
+			</column>
+			<column name="milestone_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="path_milestone_map_fk2" references="milestone(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="milestone_labour_map" catalogName="dtim_db" >
+			<column name="milestone_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="milestone_labour_map_fk1" references="milestone(id)"/>			
+			</column>
+			<column name="labour_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="milestone_labour_map_fk2" references="labour(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
+			</column>
+		</createTable>
+		<createTable tableName="labour_question_map" catalogName="dtim_db" >
+			<column name="labour_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="labour_question_map_fk1" references="labour(id)"/>			
+			</column>
+			<column name="question_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="labour_question_map_fk2" references="question(id)"/>			
+			</column>
+			<column name="sequence" type="BIGINT(10)">
+                <constraints nullable="false"/>			
+			</column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.6-1" context="test">
+	    <insert tableName="career_goal">
+	        <column name="name" value="Front End Career Goal"/>
+	    </insert>
+	    <insert tableName="career_goal">
+	        <column name="name" value="Full Stack Career Goal"/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-2" context="test">
+	    <insert tableName="path">
+	        <column name="name" value="Front End Path"/>
+	    </insert>
+	    <insert tableName="path">
+	        <column name="name" value="Back End Path"/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-3" context="test">
+	    <insert tableName="milestone">
+	        <column name="name" value="Internet"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="HTML"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="CSS"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="Javascript"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="Basic Git Usage"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="SQL"/>
+	    </insert>
+	    <insert tableName="milestone">
+	        <column name="name" value="Design Patterns"/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-4" context="test">
+	    <insert tableName="labour">
+	    	<column name="id" value="1"/>
+	        <column name="name" value="How does the internet work?"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="2"/>
+	        <column name="name" value="What is HTTP?"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="3"/>
+	        <column name="name" value="What is hosting?"/>
+	    </insert>
+	    
+	    <insert tableName="labour">
+	    	<column name="id" value="4"/>
+	        <column name="name" value="HTML Conventions and Best Practices"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="5"/>
+	        <column name="name" value="Learn HTML Basics"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="6"/>
+	        <column name="name" value="Write Semantic HTML"/>
+	    </insert>
+	    
+	    <insert tableName="labour">
+	    	<column name="id" value="7"/>
+	        <column name="name" value="Learn CSS Basics"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="8"/>
+	        <column name="name" value="Making Layouts"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="9"/>
+	        <column name="name" value="Responsive Design and Media Queries"/>
+	    </insert>
+	    
+	    <insert tableName="labour">
+	    	<column name="id" value="10"/>
+	        <column name="name" value="JS Syntax and Basic Construct"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="11"/>
+	        <column name="name" value="Learn DOM Manipulation"/>
+	    </insert>
+	    <insert tableName="labour">
+	    	<column name="id" value="12"/>
+	        <column name="name" value="Learn Fetch API / AJAX (XHR)"/>
+	    </insert>
+	    
+	    <insert tableName="labour">
+	    	<column name="id" value="13"/>
+	        <column name="name" value="Git basics 1"/>
+	    </insert>
+
+	    <insert tableName="labour">
+	    	<column name="id" value="14"/>
+	        <column name="name" value="SQL basics 1"/>
+	    </insert>
+	    
+	    <insert tableName="labour">
+	    	<column name="id" value="15"/>
+	        <column name="name" value="Design Patterns 1"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.6-5" context="test">
+	    <insert tableName="question">
+	    	<column name="id" value="7"/>
+	        <column name="text" value="How Does The Internet Work 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="8"/>
+	        <column name="text" value="How Does The Internet Work 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="9"/>	    
+	        <column name="text" value="What is HTTP 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="10"/>	    
+	        <column name="text" value="What is HTTP 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="11"/>	    
+	        <column name="text" value="What is hosting 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="12"/>	    
+	        <column name="text" value="HTML Conventions and Best Practices 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="13"/>
+	        <column name="text" value="HTML Conventions and Best Practices 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    
+	    <insert tableName="question">
+	    	<column name="id" value="14"/>	    
+	        <column name="text" value="Learn HTML Basics 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="15"/>	    
+	        <column name="text" value="Learn HTML Basics 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    
+	    <insert tableName="question">
+	    	<column name="id" value="16"/>	    
+	        <column name="text" value="Write Semantic HTML 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="17"/>	    
+	        <column name="text" value="Write Semantic HTML 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="18"/>	    
+	        <column name="text" value="Learn CSS Basics 1"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="19"/>	    
+	        <column name="text" value="Learn CSS Basics 2"/>
+	        <column name="description" value=".."/>
+	    </insert>
+	    
+	    <insert tableName="question">
+	    	<column name="id" value="20"/>	    
+	    	<column name="text" value="Making Layouts 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="21"/>	    
+	    	<column name="text" value="Making Layouts 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="22"/>	    
+	    	<column name="text" value="Responsive Design and Media Queries 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="23"/>	    
+	    	<column name="text" value="Responsive Design and Media Queries 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="24"/>	    
+	    	<column name="text" value="JS Syntax and Basic Construct 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="25"/>	    
+	    	<column name="text" value="JS Syntax and Basic Construct 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="26"/>	    
+	    	<column name="text" value="Learn DOM Manipulation 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="27"/>	    
+	    	<column name="text" value="Learn DOM Manipulation 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="28"/>	    
+	    	<column name="text" value="Learn Fetch API / AJAX (XHR 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="29"/>	    
+	    	<column name="text" value="Learn Fetch API / AJAX (XHR 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="30"/>	    
+	    	<column name="text" value="Git basics 1 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="31"/>	    
+	    	<column name="text" value="Git basics 1 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+
+	    <insert tableName="question">
+	    	<column name="id" value="32"/>	    
+	    	<column name="text" value="SQL basics 1 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="33"/>	    
+	    	<column name="text" value="SQL basics 1 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    
+	    <insert tableName="question">
+	    	<column name="id" value="34"/>	    
+	    	<column name="text" value="Design Patterns 1 1"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	    <insert tableName="question">
+	    	<column name="id" value="35"/>	    
+	    	<column name="text" value="Design Patterns 1 2"/>
+	    	<column name="description" value=".."/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-6" context="test">
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="1"/>
+	    	<column name="question_id" value="7"/>
+			<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="1"/>
+	    	<column name="question_id" value="8"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="2"/>
+	    	<column name="question_id" value="9"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="2"/>
+	    	<column name="question_id" value="10"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="3"/>
+	    	<column name="question_id" value="11"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="4"/>
+	    	<column name="question_id" value="12"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="4"/>
+	    	<column name="question_id" value="13"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="5"/>
+	    	<column name="question_id" value="14"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="5"/>
+	    	<column name="question_id" value="15"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="6"/>
+	    	<column name="question_id" value="16"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="6"/>
+	    	<column name="question_id" value="17"/>
+	    	<column name="sequence" value="2"/>	    	
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="7"/>
+	    	<column name="question_id" value="18"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="7"/>
+	    	<column name="question_id" value="19"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="8"/>
+	    	<column name="question_id" value="20"/>
+			<column name="sequence" value="1"/>	    	
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="8"/>
+	    	<column name="question_id" value="21"/>
+			<column name="sequence" value="2"/>	    	
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="9"/>
+	    	<column name="question_id" value="22"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="9"/>
+	    	<column name="question_id" value="23"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="10"/>
+	    	<column name="question_id" value="24"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="10"/>
+	    	<column name="question_id" value="25"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="11"/>
+	    	<column name="question_id" value="26"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="11"/>
+	    	<column name="question_id" value="27"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="12"/>
+	    	<column name="question_id" value="28"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="12"/>
+	    	<column name="question_id" value="29"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="13"/>
+	    	<column name="question_id" value="30"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="13"/>
+	    	<column name="question_id" value="31"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="14"/>
+	    	<column name="question_id" value="32"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="14"/>
+	    	<column name="question_id" value="33"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+	    
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="15"/>
+	    	<column name="question_id" value="34"/>
+	    	<column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="labour_question_map">
+	    	<column name="labour_id" value="15"/>
+	    	<column name="question_id" value="35"/>
+	    	<column name="sequence" value="2"/>
+	    </insert>
+
+	</changeSet>
+
+</databaseChangeLog>
