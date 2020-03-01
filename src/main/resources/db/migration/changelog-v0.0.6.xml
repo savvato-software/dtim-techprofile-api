@@ -87,43 +87,130 @@
 	
 	<changeSet author="haxwell" id="v0.0.6-1" context="test">
 	    <insert tableName="career_goal">
+	    	<column name="id" value="1"/>
 	        <column name="name" value="Front End Career Goal"/>
 	    </insert>
 	    <insert tableName="career_goal">
+	    	<column name="id" value="2"/>
 	        <column name="name" value="Full Stack Career Goal"/>
 	    </insert>
 	</changeSet>
 
 	<changeSet author="haxwell" id="v0.0.6-2" context="test">
 	    <insert tableName="path">
+	        <column name="id" value="1"/>
 	        <column name="name" value="Front End Path"/>
 	    </insert>
 	    <insert tableName="path">
+	    	<column name="id" value="2"/>
 	        <column name="name" value="Back End Path"/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-2a" context="test">
+	    <insert tableName="career_goal_path_map">
+	        <column name="career_goal_id" value="1"/>
+	        <column name="path_id" value="1"/>
+	        <column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="career_goal_path_map">
+	        <column name="career_goal_id" value="2"/>
+	        <column name="path_id" value="1"/>
+	        <column name="sequence" value="2"/>
+	    </insert>
+	    <insert tableName="career_goal_path_map">
+	        <column name="career_goal_id" value="2"/>
+	        <column name="path_id" value="2"/>
+	        <column name="sequence" value="3"/>
 	    </insert>
 	</changeSet>
 
 	<changeSet author="haxwell" id="v0.0.6-3" context="test">
 	    <insert tableName="milestone">
+			<column name="id" value="1"/>
 	        <column name="name" value="Internet"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="2"/>
 	        <column name="name" value="HTML"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="3"/>
 	        <column name="name" value="CSS"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="4"/>
 	        <column name="name" value="Javascript"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="5"/>
 	        <column name="name" value="Basic Git Usage"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="6"/>
 	        <column name="name" value="SQL"/>
 	    </insert>
 	    <insert tableName="milestone">
+	    	<column name="id" value="7"/>
 	        <column name="name" value="Design Patterns"/>
+	    </insert>
+	    <insert tableName="milestone">
+	    	<column name="id" value="8"/>
+	        <column name="name" value="Java"/>
+	    </insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-3a" context="test">
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="1"/>
+	        <column name="sequence" value="1"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="2"/>
+	        <column name="sequence" value="2"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="3"/>
+	        <column name="sequence" value="3"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="4"/>
+	        <column name="sequence" value="4"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="5"/>
+	        <column name="sequence" value="5"/>
+	    </insert>
+	    
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="2"/>
+	        <column name="milestone_id" value="5"/>
+	        <column name="sequence" value="5"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="2"/>
+	        <column name="milestone_id" value="6"/>
+	        <column name="sequence" value="4"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="2"/>
+	        <column name="milestone_id" value="7"/>
+	        <column name="sequence" value="2"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="2"/>
+	        <column name="milestone_id" value="8"/>
+	        <column name="sequence" value="3"/>
+	    </insert>
+	    <insert tableName="path_milestone_map">
+	        <column name="path_id" value="1"/>
+	        <column name="milestone_id" value="5"/>
+	        <column name="sequence" value="1"/>
 	    </insert>
 	</changeSet>
 
@@ -197,6 +284,90 @@
 	</changeSet>
 	
 	<changeSet author="haxwell" id="v0.0.6-5" context="test">
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="1"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="2"/>
+			<column name="sequence" value="2"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="3"/>
+			<column name="sequence" value="3"/>
+		</insert>
+
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="2"/>
+			<column name="labour_id" value="4"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="5"/>
+			<column name="sequence" value="2"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="6"/>
+			<column name="sequence" value="3"/>
+		</insert>
+
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="3"/>
+			<column name="labour_id" value="7"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="3"/>
+			<column name="labour_id" value="8"/>
+			<column name="sequence" value="2"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="1"/>
+			<column name="labour_id" value="9"/>
+			<column name="sequence" value="3"/>
+		</insert>
+		
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="4"/>
+			<column name="labour_id" value="10"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="4"/>
+			<column name="labour_id" value="11"/>
+			<column name="sequence" value="2"/>
+		</insert>	
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="4"/>
+			<column name="labour_id" value="12"/>
+			<column name="sequence" value="3"/>
+		</insert>
+		
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="5"/>
+			<column name="labour_id" value="13"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="6"/>
+			<column name="labour_id" value="14"/>
+			<column name="sequence" value="1"/>
+		</insert>	
+		
+		<insert tableName="milestone_labour_map">
+			<column name="milestone_id" value="7"/>
+			<column name="labour_id" value="15"/>
+			<column name="sequence" value="1"/>
+		</insert>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.6-6" context="test">
 	    <insert tableName="question">
 	    	<column name="id" value="7"/>
 	        <column name="text" value="How Does The Internet Work 1"/>
@@ -356,7 +527,7 @@
 	    </insert>
 	</changeSet>
 
-	<changeSet author="haxwell" id="v0.0.6-6" context="test">
+	<changeSet author="haxwell" id="v0.0.6-7" context="test">
 	    <insert tableName="labour_question_map">
 	    	<column name="labour_id" value="1"/>
 	    	<column name="question_id" value="7"/>
