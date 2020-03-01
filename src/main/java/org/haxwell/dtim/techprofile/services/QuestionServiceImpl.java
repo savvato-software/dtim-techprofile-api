@@ -74,6 +74,10 @@ public class QuestionServiceImpl implements QuestionService {
 		}			
 	}
 	
+	public Iterable<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId) {
+		return this.questionRepository.findAllQuestionsAskedButNotCorrectlyAnswered(userId);
+	}
+	
 	@Transactional
 	public Question save(Long questionId, String questionText, String questionDescription, int[][] lilvassociations) {
 		Optional<Question> opt = this.questionRepository.findById(questionId);

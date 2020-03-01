@@ -12,4 +12,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 	Iterable<Question> findByLineItemAndLevelIndex(Long lineItemId, Long levelIndex);
 	
 	Iterable<Question> findByIdIn(List ids);
+	
+	@Query(nativeQuery = true, value = "SELECT q.* FROM question q, user_question_grade uqg WHERE uqg.user_id=?1 AND uqg.question_id=q.question_id AND uqg.grade=0 OR uqg.grade=1")
+	Iterable<Question> findAllQuestionsAskedButNotCorrectlyAnswered(Long userId);
 }

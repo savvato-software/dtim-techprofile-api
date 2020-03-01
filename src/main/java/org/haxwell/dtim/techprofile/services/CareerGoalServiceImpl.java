@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.haxwell.dtim.techprofile.entities.CareerGoal;
 import org.haxwell.dtim.techprofile.entities.Path;
+import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.repositories.CareerGoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,9 @@ public class CareerGoalServiceImpl implements CareerGoalService {
 	public Iterable<Path> getPathsFor(Long id) {
 		return careerGoalRepo.findPathsFor(id);
 	}
+	
+	public Iterable<Question> getQuestionsForCareerGoal(Long id) {
+		return careerGoalRepo.findAllQuestionsForCareerGoal(id);
+	}
+	
 }

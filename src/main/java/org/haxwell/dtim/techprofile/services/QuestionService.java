@@ -17,5 +17,7 @@ public interface QuestionService {
 	
 	void setAllLineItemAndLevelsFor(Long questionId, int[][] arr);
 	
+	Iterable<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId);
+	
 	Question save(Long questionId, String questionText, String questionDescription, int[][] lilvassociations);
 }
