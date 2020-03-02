@@ -20,4 +20,8 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 	
 	@Query(nativeQuery = true, value = "SELECT distinct q.* FROM question q, user_question_grade uqg WHERE uqg.user_id=?1 AND uqg.question_id=q.id AND uqg.grade=0 OR uqg.grade=1 ORDER BY q.id")
 	List<Question> findAllQuestionsAskedButNotCorrectlyAnswered(Long userId);
+	
+	@Query(nativeQuery = true, value = "select q.* from question q, user_question_grade uqg where uqg.user_id = ?1 and uqg.session_id = ?2 and uqg.question_id=q.id")
+	List<Question> findAllQuestionsAskedInAGivenSession(Long userId, Long sessionId);
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.haxwell.dtim.techprofile.entities.Question;
+import org.haxwell.dtim.techprofile.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,9 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 
 	@Autowired
 	CareerGoalService careerGoalService;
+
+	@Autowired
+	QuestionRepository questionRepository;
 
 	public List<Question> getNextQuestionsForCareerGoal(Long userId, Long careerGoalId, Integer maxToReturn) {
 		// select all questions for this user that they have been asked, but not successfully answered.
@@ -101,5 +105,9 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 		}
 		
 		return rtn;
+	}
+	
+	public List<Question> getQuestionsAskedInAGivenSession(Long userId, Long sessionId) {
+		return questionRepository.findAllQuestionsAskedInAGivenSession(userId, sessionId);
 	}
 }
