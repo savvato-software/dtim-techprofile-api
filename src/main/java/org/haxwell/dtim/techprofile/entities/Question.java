@@ -52,7 +52,17 @@ public class Question {
 		this.description = description;
 	}
 	
+	public Question(Long id, String text, String description) {
+		this.id = id;
+		this.text = text;
+		this.description = description;
+	}
+	
 	public Question() {
 		
+	}
+	
+	public String toString() {
+		return this.id + " " + this.text;
 	}
 }

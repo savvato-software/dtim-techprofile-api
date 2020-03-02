@@ -39,6 +39,15 @@
 			</column>
 		</createTable>
 		
+		<createTable tableName="user_career_goal_map" catalogName="dtim_db" >
+			<column name="career_goal_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_career_goal_map_fk1" references="career_goal(id)"/>			
+			</column>
+			<column name="user_id" type="BIGINT(20)">
+                <constraints nullable="false" foreignKeyName="user_career_goal_map_fk2" references="user(id)"/>			
+			</column>
+		</createTable>
+		
 		<createTable tableName="career_goal_path_map" catalogName="dtim_db" >
 			<column name="career_goal_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="career_goal_path_map_fk1" references="career_goal(id)"/>			
@@ -50,6 +59,7 @@
                 <constraints nullable="false"/>			
 			</column>
 		</createTable>
+		
 		<createTable tableName="path_milestone_map" catalogName="dtim_db" >
 			<column name="path_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="path_milestone_map_fk1" references="path(id)"/>			
@@ -61,6 +71,7 @@
                 <constraints nullable="false"/>			
 			</column>
 		</createTable>
+		
 		<createTable tableName="milestone_labour_map" catalogName="dtim_db" >
 			<column name="milestone_id" type="BIGINT(20)">
                 <constraints nullable="false" foreignKeyName="milestone_labour_map_fk1" references="milestone(id)"/>			
@@ -93,6 +104,13 @@
 	    <insert tableName="career_goal">
 	    	<column name="id" value="2"/>
 	        <column name="name" value="Full Stack Career Goal"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="haxwell" id="v0.0.6-1a" context="test">
+	    <insert tableName="user_career_goal_map">
+	        <column name="career_goal_id" value="1"/>
+	        <column name="user_id" value="2"/>
 	    </insert>
 	</changeSet>
 

@@ -74,8 +74,24 @@ public class QuestionServiceImpl implements QuestionService {
 		}			
 	}
 	
-	public Iterable<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId) {
-		return this.questionRepository.findAllQuestionsAskedButNotCorrectlyAnswered(userId);
+	public List<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId) {
+		String str = "fhfdas" + "fdasfdas";
+		str = str + "fdsa";
+		
+		// I had to put this here, because when I had it as a Repo query, it didn't seem to be able to convert the array of values that is a row of results in this query, to a Question object. Not sure why, or what I was missing.. I don't rightly remember, but I bet the reason for the other em.createNativeQuery() usages are for a similar reason. Anyway someone should figure out what's going on there one day. 
+		List<Object[]> resultList = em.createNativeQuery("SELECT q.* FROM question q, user_question_grade uqg WHERE uqg.user_id=:userId AND uqg.question_id=q.id AND (uqg.grade=0 OR uqg.grade=1) ORDER BY q.id")
+			.setParameter("userId",  userId)
+			.getResultList();
+		
+		ArrayList<Question> rtn = new ArrayList<>();
+		
+		resultList.forEach(row -> rtn.add(new Question(Long.parseLong(row[0].toString()), row[1].toString(), row[2].toString())));
+		
+		return rtn;
+	}
+	
+	public List<Question> getAllQuestionsAskedPeriod(Long userId) {
+		return this.questionRepository.findAllQuestionsAskedPeriod(userId);
 	}
 	
 	@Transactional

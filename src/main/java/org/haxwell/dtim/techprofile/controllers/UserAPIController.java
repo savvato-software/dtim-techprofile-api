@@ -6,11 +6,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.haxwell.dtim.techprofile.constants.Constants;
+import org.haxwell.dtim.techprofile.entities.CareerGoal;
+import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.entities.User;
 import org.haxwell.dtim.techprofile.entities.UserQuestionGrade;
 import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.services.MockInterviewSessionService;
 import org.haxwell.dtim.techprofile.services.TechProfileService;
+import org.haxwell.dtim.techprofile.services.UserCareerGoalService;
+import org.haxwell.dtim.techprofile.services.UserQuestionService;
 import org.haxwell.dtim.techprofile.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +29,12 @@ public class UserAPIController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserQuestionService userQuestionService;
+	
+	@Autowired
+	UserCareerGoalService userCareerGoalService;
 	
 	@Autowired
 	TechProfileService techProfileService;
@@ -98,7 +108,7 @@ public class UserAPIController {
 	public List<UserQuestionGrade> getCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
 		return userService.getUserQuestionHistory(cId, qId);
 	}
-
+	
 	@RequestMapping(value = { "/api/user/{cId}/question/{qId}/history" }, method=RequestMethod.POST)
 	public UserQuestionGrade setCandidateHistoryForQuestion(HttpServletRequest request, @PathVariable Long cId, @PathVariable Long qId) {
 		Long sessionId = Long.parseLong(request.getParameter("sessionId"));
@@ -106,5 +116,17 @@ public class UserAPIController {
 		String comment = request.getParameter("comment");
 
 		return userService.setGradeForQuestion(cId, sessionId, qId, score, comment);
-	}	
+	}
+	
+	@RequestMapping(value = { "/api/user/{cId}/careergoal/{cgId}/questions" }, method=RequestMethod.GET)
+	public List<Question> getUsersNextQuestionsTowardACareerGoal(@PathVariable Long cId, @PathVariable Long cgId) {
+		return userQuestionService.getNextQuestionsForCareerGoal(cId, cgId, 10);
+	}
+	
+	@RequestMapping(value = { "/api/user/{cId}/careergoal" }, method=RequestMethod.GET)
+	public CareerGoal getUsersCareerGoal(@PathVariable Long cId) {
+		// sends the entire career goal object, with path relationships and all.
+		return userCareerGoalService.getCareerGoalForUser(cId);
+	}
+	
 }
