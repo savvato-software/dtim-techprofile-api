@@ -545,6 +545,98 @@
 	    </insert>
 	</changeSet>
 
+	<changeSet author="haxwell" id="v0.0.6-6a" context="test">
+		<!-- Create Topics -->
+		<insert tableName="tech_profile_topic">
+			<column name="id" value="3"/>
+			<column name="name" value="Web Development"/>
+		</insert>
+
+		<insert tableName="tech_profile_topic_map">
+			<column name="tech_profile_id" value="1"/>
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="sequence" value="3"/>
+		</insert>
+
+		<!-- Create Line Items -->
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="11"/>
+			<column name="name" value="CSS"/>
+			<column name="l0_description" value="Groks the box model"/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="12"/>
+			<column name="name" value="HTML"/>
+			<column name="l0_description" value="Can write a hello world with colors in under 10 minutes."/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="13"/>
+			<column name="name" value="Javascript"/>
+			<column name="l0_description" value="Knows that JS is what makes web pages do things."/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="14"/>
+			<column name="name" value="Internet"/>
+			<column name="l0_description" value="Knows that it is not a series of tubes."/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+		
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="15"/>
+			<column name="name" value="SQL"/>
+			<column name="l0_description" value="Can write a query with inner joins."/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+		
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="sequence" value="1"/>
+		</insert>
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="sequence" value="2"/>			
+		</insert>
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="sequence" value="3"/>			
+		</insert>
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="sequence" value="4"/>			
+		</insert>
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="15"/>
+			<column name="sequence" value="5"/>			
+		</insert>
+		<insert tableName="tech_profile_topic_line_item_map">
+			<column name="tech_profile_topic_id" value="3"/>
+			<column name="tech_profile_line_item_id" value="6"/>
+			<column name="sequence" value="6"/>			
+		</insert>
+		
+	</changeSet>
+
 	<changeSet author="haxwell" id="v0.0.6-7" context="test">
 	    <insert tableName="labour_question_map">
 	    	<column name="labour_id" value="1"/>
