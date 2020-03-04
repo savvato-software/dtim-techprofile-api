@@ -25,4 +25,6 @@ public interface TechProfileService {
 	
 	public List getQuestionCountsPerCell();
 	public List getCorrectlyAnsweredQuestionCountsPerCell(Long userId);
+	public List getIncorrectlyAnsweredQuestionCountsPerCell(Long userId);
+	public List getAskedQuestionCountsPerCell(Long userId);
 }

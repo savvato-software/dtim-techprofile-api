@@ -177,4 +177,16 @@ public class TechProfileAPIController {
 		
 		return list;
 	}
+	@RequestMapping(value = { "/api/techprofile/user/{userId}/incorrectlyAnsweredQuestionCountsPerCell" }, method=RequestMethod.GET)
+	public List getIncorrectlyAnsweredQuestionCountsPerCell(@PathVariable Long userId) {
+		List list = techProfileService.getIncorrectlyAnsweredQuestionCountsPerCell(userId);
+		
+		return list;
+	}
+	@RequestMapping(value = { "/api/techprofile/user/{userId}/askedQuestionCountsPerCell" }, method=RequestMethod.GET)
+	public List getAskedQuestionCountsPerCell(@PathVariable Long userId) {
+		List list = techProfileService.getAskedQuestionCountsPerCell(userId);
+		
+		return list;
+	}
 }
