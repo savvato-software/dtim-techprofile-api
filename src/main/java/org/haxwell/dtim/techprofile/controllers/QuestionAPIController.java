@@ -38,6 +38,11 @@ public class QuestionAPIController {
 		return questionService.getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex, userId);
 	}
 	
+	@RequestMapping(value = { "/api/question/{lineItemLevelId}/{lineItemLevelIndex}/user/{userId}/incorrectlyAnsweredQuestions" }, method=RequestMethod.GET)
+	public Iterable<Question> getIncorrectlyAnsweredQuestions(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
+		return questionService.getQuestionsAnsweredIncorrectlyAtAGivenLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex, userId);
+	}
+	
 	@RequestMapping(value = { "/api/question/{questionId}/lineitem/levels" }, method=RequestMethod.GET)
 	public Iterable getAllLineItemLevelsAssociatedWithTheGivenQuestion(@PathVariable Long questionId) {
 		return questionService.getAllLineItemAndLevelsFor(questionId);
@@ -47,7 +52,7 @@ public class QuestionAPIController {
 	public boolean setAllLineItemLevelsAssociatedWithTheGivenQuestion(HttpServletRequest request, @PathVariable Long questionId) {
 		String count = request.getParameter("count");
 		
-		if (count != null) {
+		if (count != null) { 
 			int[][] arr = new int[Integer.parseInt(count)][2];
 			
 			for (int x = 0; x < Integer.parseInt(count); x++) {

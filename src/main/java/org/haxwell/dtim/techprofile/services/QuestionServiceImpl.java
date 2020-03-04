@@ -38,6 +38,23 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
+	public Iterable<Question> getQuestionsAnsweredIncorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId) {
+		List resultList = em.createNativeQuery("SELECT uqg.question_id FROM user_question_grade uqg WHERE uqg.user_id=:userId AND (uqg.grade=0 OR uqg.grade=1) AND uqg.question_id IN (SELECT lilqm.question_id FROM line_item_level_question_map lilqm WHERE lilqm.tech_profile_line_item_id=:lineItemId and lilqm.tech_profile_line_item_level_index=:levelIndex);")
+				.setParameter("userId", userId)
+				.setParameter("lineItemId", lineItemId)
+				.setParameter("levelIndex", lineItemLevel)
+				.getResultList();
+
+		ArrayList<Long> list = new ArrayList<>();
+		
+		for (int i = 0; i < resultList.size(); i++) {
+			list.add(Long.parseLong((resultList.get(i) + "")));
+		}
+		
+		return this.questionRepository.findByIdIn(list);
+	}
+	
+	@Override
 	public Iterable<Question> getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId) {
 		List resultList = em.createNativeQuery("SELECT uqg.question_id FROM user_question_grade uqg WHERE uqg.user_id=:userId AND uqg.grade=2 AND uqg.question_id IN (SELECT lilqm.question_id FROM line_item_level_question_map lilqm WHERE lilqm.tech_profile_line_item_id=:lineItemId and lilqm.tech_profile_line_item_level_index=:levelIndex);")
 				.setParameter("userId", userId)
@@ -75,9 +92,7 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	public List<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId) {
-		String str = "fhfdas" + "fdasfdas";
-		str = str + "fdsa";
-		
+
 		// I had to put this here, because when I had it as a Repo query, it didn't seem to be able to convert the array of values that is a row of results in this query, to a Question object. Not sure why, or what I was missing.. I don't rightly remember, but I bet the reason for the other em.createNativeQuery() usages are for a similar reason. Anyway someone should figure out what's going on there one day. 
 		List<Object[]> resultList = em.createNativeQuery("SELECT q.* FROM question q, user_question_grade uqg WHERE uqg.user_id=:userId AND uqg.question_id=q.id AND (uqg.grade=0 OR uqg.grade=1) ORDER BY q.id")
 			.setParameter("userId",  userId)
