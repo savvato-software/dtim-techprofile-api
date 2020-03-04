@@ -604,6 +604,15 @@
 			<column name="l3_description" value="Level 3"/>
 		</insert>
 		
+		<insert tableName="tech_profile_line_item">
+			<column name="id" value="16"/>
+			<column name="name" value="Git"/>
+			<column name="l0_description" value="Can clone/fork repos and send pull requests."/>
+			<column name="l1_description" value="Level 1"/>
+			<column name="l2_description" value="Level 2"/>
+			<column name="l3_description" value="Level 3"/>
+		</insert>
+		
 		<insert tableName="tech_profile_topic_line_item_map">
 			<column name="tech_profile_topic_id" value="3"/>
 			<column name="tech_profile_line_item_id" value="11"/>
@@ -634,7 +643,162 @@
 			<column name="tech_profile_line_item_id" value="6"/>
 			<column name="sequence" value="6"/>			
 		</insert>
+	</changeSet>
+
+	<changeSet author="haxwell" id="v0.0.6-6b" context="test">
+		<!-- In order by question-id -->
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="7"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="8"/>
+		</insert>
+
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="9"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="10"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="14"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="11"/>
+		</insert>
 		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="12"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="13"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="14"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="15"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="16"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="12"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="17"/>
+		</insert>
+		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="18"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="19"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="20"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="21"/>
+		</insert>		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="1"/>
+			<column name="question_id" value="22"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="11"/>
+			<column name="tech_profile_line_item_level_index" value="1"/>
+			<column name="question_id" value="23"/>
+		</insert>
+		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="24"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="25"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="26"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="27"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="28"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="13"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="29"/>
+		</insert>
+		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="16"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="30"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="16"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="31"/>
+		</insert>
+		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="15"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="32"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="15"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="33"/>
+		</insert>
+		
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="6"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="34"/>
+		</insert>
+		<insert tableName="line_item_level_question_map">
+			<column name="tech_profile_line_item_id" value="6"/>
+			<column name="tech_profile_line_item_level_index" value="0"/>
+			<column name="question_id" value="35"/>
+		</insert>
 	</changeSet>
 
 	<changeSet author="haxwell" id="v0.0.6-7" context="test">
