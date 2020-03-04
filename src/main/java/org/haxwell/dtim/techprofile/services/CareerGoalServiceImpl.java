@@ -3,6 +3,7 @@ package org.haxwell.dtim.techprofile.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,7 @@ import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.repositories.CareerGoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CareerGoalServiceImpl implements CareerGoalService {
@@ -46,5 +48,34 @@ public class CareerGoalServiceImpl implements CareerGoalService {
 		resultList.forEach(row -> rtn.add(new Question(Long.parseLong(row[0].toString()), row[1].toString(), row[2].toString())));
 		
 		return rtn;
+	}
+	
+	@Transactional
+	public CareerGoal save(Long careerGoalId, String name, String csvPathAssociations) {
+		Optional<CareerGoal> opt = this.careerGoalRepo.findById(careerGoalId);
+		CareerGoal cg; 
+		
+		if (opt.isPresent()) {
+			cg = opt.get();
+		} else {
+			cg = new CareerGoal();
+		}
+		
+		cg.setName(name);
+		
+		cg = this.careerGoalRepo.save(cg);
+		
+		em.createNativeQuery("DELETE FROM career_goal_path_map WHERE career_goal_id=:careerGoalId")
+		.setParameter("careerGoalId",  cg.getId()).executeUpdate();
+
+		int sequence = 1;
+		StringTokenizer st = new StringTokenizer(csvPathAssociations, ",");
+		
+		while (st.hasMoreTokens()) {
+			em.createNativeQuery("INSERT INTO career_goal_path_map (career_goal_id, path_id, sequence) VALUES ("+ cg.getId() + ", "+ st.nextToken() + ", " + sequence++ + ")")
+			.executeUpdate();
+		}
+		
+		return this.careerGoalRepo.findById(cg.getId()).get();
 	}
 }

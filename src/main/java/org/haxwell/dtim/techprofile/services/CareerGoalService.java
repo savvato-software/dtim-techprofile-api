@@ -15,4 +15,5 @@ public interface CareerGoalService {
 	public Iterable<Path> getPathsFor(Long id);
 	
 	public List<Question> getQuestionsForCareerGoal(Long id);
+	public CareerGoal save(Long id, String name, String csvPathAssociations);	
 }
