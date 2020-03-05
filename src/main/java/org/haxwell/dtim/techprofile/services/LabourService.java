@@ -7,4 +7,5 @@ import org.haxwell.dtim.techprofile.entities.Labour;
 public interface LabourService {
 	public Optional<Labour> getById(Long id);
 	public Iterable<Labour> getAll();
+	public Labour save(Long labourId, String name, String csvQuestionAssociations);
 }
