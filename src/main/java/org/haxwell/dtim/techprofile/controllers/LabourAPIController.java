@@ -25,7 +25,7 @@ public class LabourAPIController {
 		return labourService.getById(id);
 	}
 	
-	@RequestMapping(value = { "/api/labour/" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/api/labour/all" }, method=RequestMethod.GET)
 	public Iterable<Labour> get() {
 		return labourService.getAll();
 	}
