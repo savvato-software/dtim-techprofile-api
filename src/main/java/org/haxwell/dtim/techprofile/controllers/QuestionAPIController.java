@@ -74,7 +74,7 @@ public class QuestionAPIController {
 	}
 	
 	@RequestMapping(value = { "/api/question/all"}, method=RequestMethod.GET)
-	public Iterable<Question> getAllById(@PathVariable String id) {
+	public Iterable<Question> getAllById() {
 		return questionService.getAll();
 	}
 	
