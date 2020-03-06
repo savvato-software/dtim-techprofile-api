@@ -25,7 +25,7 @@ public class MilestoneAPIController {
 		return milestoneService.getById(id);
 	}
 	
-	@RequestMapping(value = { "/api/milestone/" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/api/milestone/all" }, method=RequestMethod.GET)
 	public Iterable<Milestone> get() {
 		return milestoneService.getAll();
 	}
