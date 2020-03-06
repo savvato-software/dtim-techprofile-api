@@ -28,6 +28,12 @@ public class QuestionAPIController {
 		
 	}
 	
+	@RequestMapping(value = { "/api/question/lineitem/{lineItemLevelId}" }, method=RequestMethod.GET)
+	public Iterable<Question> getByLineItem(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex) {
+		return questionService.getByLineItem(lineItemLevelId);
+	}
+	
+	// TODO Change these api/question/XX addresses to api/question/lineItem/.. Deprecate them anyway..  
 	@RequestMapping(value = { "/api/question/{lineItemLevelId}/{lineItemLevelIndex}" }, method=RequestMethod.GET)
 	public Iterable<Question> get(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex) {
 		return questionService.getByLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex);
