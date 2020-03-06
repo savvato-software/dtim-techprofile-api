@@ -10,6 +10,12 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 
 	// TODO: Can we use List, instead of iterable.. ? WHat we really want is a List...
 	
+	@Query(nativeQuery = true, value = "select q.* from question q, line_item_level_question_map lilqm where lilqm.tech_profile_line_item_id in (SELECT tptlim.tech_profile_line_item_id FROM tech_profile_topic_line_item_map tptlim WHERE tech_profile_topic_id=?1) AND lilqm.question_id=q.id")
+	Iterable<Question> findByTopic(Long topicId);
+	
+	@Query(nativeQuery = true, value = "select q.* from question q, line_item_level_question_map lilqm where lilqm.tech_profile_line_item_id=?1 and lilqm.question_id=q.id")
+	Iterable<Question> findByLineItem(Long lineItemId);
+	
 	@Query(nativeQuery = true, value = "select q.* from question q, line_item_level_question_map lilqm where lilqm.tech_profile_line_item_id=?1 and lilqm.tech_profile_line_item_level_index=?2 and lilqm.question_id=q.id")
 	Iterable<Question> findByLineItemAndLevelIndex(Long lineItemId, Long levelIndex);
 	

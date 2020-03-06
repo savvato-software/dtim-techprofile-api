@@ -10,6 +10,7 @@ public interface QuestionService {
 	Iterable<Question> getAll();
 	
 	Optional<Question> getById(Long id);
+	Iterable<Question> getByLineItem(Long lineItemId);
 	Iterable<Question> getByLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel);
 	Iterable<Question> getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId);
 	Iterable<Question> getQuestionsAnsweredIncorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId);

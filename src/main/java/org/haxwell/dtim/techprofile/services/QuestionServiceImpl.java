@@ -28,6 +28,11 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
+	public Iterable<Question> getByLineItem(Long lineItemId) {
+		return this.questionRepository.findByLineItem(lineItemId);
+	}
+	
+	@Override
 	public Iterable<Question> getByLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel) {
 		return this.questionRepository.findByLineItemAndLevelIndex(lineItemId, lineItemLevel);
 	}
