@@ -59,6 +59,25 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 	
+	public User updateUserPassword(Long id, String password) {
+		if (password != null) {
+			
+			Optional<User> opt = this.userRepo.findById(id);
+			
+			if (opt.isPresent()) {
+				User user = opt.get();
+				
+				user.setPassword(passwordEncoder.encode(password));
+
+				User rtn = userRepo.save(user);
+				
+				return rtn;
+			} 
+		}
+		
+		return null;
+	}
+	
 	public User find(String query) {
 		Optional<User> opt = userRepo.findByPhoneOrEmail(query);
 		User rtn = null;

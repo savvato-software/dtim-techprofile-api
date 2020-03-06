@@ -62,6 +62,15 @@ public class UserAPIController {
 		}
 	}
 	
+	@RequestMapping(value = { "/api/user/{userId}" }, method=RequestMethod.POST)
+	public boolean updateUser(HttpServletRequest request, @PathVariable Long userId) {
+		String password = request.getParameter("password");
+		
+		User user = userService.updateUserPassword(userId, password);
+		
+		return mockInterviewSessionService.markInAttendance(userId);
+	}
+	
 	@RequestMapping(value = { "/api/user/{userId}/markInAttendance" }, method=RequestMethod.POST)
 	public boolean markInAttendance(@PathVariable Long userId) {
 		return mockInterviewSessionService.markInAttendance(userId);
