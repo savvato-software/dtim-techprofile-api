@@ -36,7 +36,7 @@ public class CareerGoalAPIController {
 		return careerGoalService.getById(id);
 	}
 	
-	@RequestMapping(value = { "/api/careergoal/" }, method=RequestMethod.GET)
+	@RequestMapping(value = { "/api/careergoal/all" }, method=RequestMethod.GET)
 	public Iterable<CareerGoal> get() {
 		return careerGoalService.getAll();
 	}
