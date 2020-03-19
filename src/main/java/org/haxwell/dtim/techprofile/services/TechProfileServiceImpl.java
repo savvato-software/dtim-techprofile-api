@@ -1,14 +1,18 @@
 package org.haxwell.dtim.techprofile.services;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
 import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
@@ -38,6 +42,9 @@ public class TechProfileServiceImpl implements TechProfileService {
 	
 	@Autowired
 	UserTechProfileLineItemScoreRepository utplisRepository;
+	
+	@Autowired
+	QuestionService questionService;
 	
 	@Override
 	public TechProfile get(Long id) {
@@ -270,37 +277,76 @@ public class TechProfileServiceImpl implements TechProfileService {
 	}
 
 	/**** *** ***/
-	public List getCorrectlyAnsweredQuestionCountsPerCell(Long userId) {	
-		
-		// Get the question_id of every question this user has correctly answered
-		
-		//	Count all of the times a question is associated with a given lineItem and Level		
-		
-		// TODO: When the time comes, we can limit this query to only a subset of the sessions they were in by adding "...AND SESSION_ID < ?1"
-		
-		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * FROM line_item_level_question_map lilqm WHERE lilqm.question_id IN (SELECT DISTINCT(question_id) FROM user_question_grade WHERE user_id=:userId AND grade=2)) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
-				.setParameter("userId", userId)
-				.getResultList();
-
-		return resultList;
+	public List getCorrectlyAnsweredQuestionCountsPerCell(Long userId) {
+		return getQuestionCountsPerCell(userId, (uId) -> { return questionService.getQuestionsAnsweredCorrectly(uId); });
 	}
 
 	/**** *** ***/
 	public List getIncorrectlyAnsweredQuestionCountsPerCell(Long userId) {	
-		
-		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * FROM line_item_level_question_map lilqm WHERE lilqm.question_id IN (SELECT DISTINCT(question_id) FROM user_question_grade WHERE user_id=:userId AND (grade=0 OR grade=1))) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
-				.setParameter("userId", userId)
-				.getResultList();
-
-		return resultList;
+		return getQuestionCountsPerCell(userId, (uId) -> { return questionService.getQuestionsAnsweredIncorrectly(uId); });
 	}
+
 	/**** *** ***/
 	public List getAskedQuestionCountsPerCell(Long userId) {	
-		
 		List resultList = em.createNativeQuery("select tech_profile_line_item_id, tech_profile_line_item_level_index, count(*) FROM  (select * FROM line_item_level_question_map lilqm WHERE lilqm.question_id IN (SELECT DISTINCT(question_id) FROM user_question_grade WHERE user_id=:userId)) as tabl GROUP BY tech_profile_line_item_id, tech_profile_line_item_level_index;")
 				.setParameter("userId", userId)
 				.getResultList();
 
 		return resultList;
+	}
+
+	private List getQuestionCountsPerCell(Long userId, Function<Long, Iterable<Question>> func) {
+		
+		/**
+		 * Get all the questions for this user via a function
+		 * 
+		 * For each of those questions, we need its lineitem and level index
+		 * 
+		 * then count up all that occur for each lineitemlevelindex
+		 */
+		
+		Iterable<Question> questions = func.apply(userId);
+		Iterator<Question> iterator = questions.iterator();
+		
+		HashMap<String, Integer> hashmap = new HashMap<>();
+		
+		while (iterator.hasNext()) {
+			List list = techProfileLineItemRepository.getLineItemLevelIndexForQuestion(iterator.next().getId());
+			
+			Iterator listIterator = list.iterator();
+			while (listIterator.hasNext()) {
+				Object[] lilv = (Object[])listIterator.next();
+				long lineItemId = ((BigInteger)lilv[0]).longValue();
+				long levelIndex = ((BigInteger)lilv[1]).longValue();
+
+				String key = lineItemId+","+levelIndex;
+
+				if (!hashmap.containsKey(key)) 
+					hashmap.put(key, 0);
+
+				int count = hashmap.get(key);
+
+				hashmap.put(key, ++count);
+			}
+		}
+
+		ArrayList<int[]> rtn = new ArrayList<>();
+
+		Iterator<String> keysIterator = hashmap.keySet().iterator();
+
+		while (keysIterator.hasNext()) {
+			String key = keysIterator.next();
+
+			int[] intArr = new int[3];
+			int commaIndex = key.indexOf(',');
+
+			intArr[0] = Integer.parseInt(key.substring(0, commaIndex));
+			intArr[1] = Integer.parseInt(key.substring(commaIndex+1));
+			intArr[2] = hashmap.get(key);
+
+			rtn.add(intArr);
+		}
+
+		return rtn;
 	}
 }

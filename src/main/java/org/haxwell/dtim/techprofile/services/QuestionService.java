@@ -12,6 +12,8 @@ public interface QuestionService {
 	Optional<Question> getById(Long id);
 	Iterable<Question> getByLineItem(Long lineItemId);
 	Iterable<Question> getByLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel);
+	Iterable<Question> getQuestionsAnsweredCorrectly(Long userId);
+	Iterable<Question> getQuestionsAnsweredIncorrectly(Long userId);
 	Iterable<Question> getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId);
 	Iterable<Question> getQuestionsAnsweredIncorrectlyAtAGivenLineItemAndLevelNumber(Long lineItemId, Long lineItemLevel, Long userId);
 
@@ -20,7 +22,7 @@ public interface QuestionService {
 	void setAllLineItemAndLevelsFor(Long questionId, int[][] arr);
 	
 	List<Question> getAllQuestionsAskedPeriod(Long userId);
-	List<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId);
+//	List<Question> getAllQuestionsAskedButNotSuccessfullyAnswered(Long userId);
 	
 	Question save(Long questionId, String questionText, String questionDescription, int[][] lilvassociations);
 }

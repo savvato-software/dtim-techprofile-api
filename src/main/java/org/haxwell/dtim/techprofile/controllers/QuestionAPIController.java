@@ -38,14 +38,29 @@ public class QuestionAPIController {
 	public Iterable<Question> get(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex) {
 		return questionService.getByLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex);
 	}
+
+	@RequestMapping(value = { "/api/question/user/{userId}/askedQuestions" }, method=RequestMethod.GET)
+	public Iterable<Question> getAskedQuestions(@PathVariable Long userId) {
+		return questionService.getAllQuestionsAskedPeriod(userId);
+	}
+	
+	@RequestMapping(value = { "/api/question/user/{userId}/correctlyAnsweredQuestions" }, method=RequestMethod.GET)
+	public Iterable<Question> getCorrectlyAnsweredQuestions(@PathVariable Long userId) {
+		return questionService.getQuestionsAnsweredCorrectly(userId);
+	}
+	
+	@RequestMapping(value = { "/api/question/user/{userId}/incorrectlyAnsweredQuestions" }, method=RequestMethod.GET)
+	public Iterable<Question> getIncorrectlyAnsweredQuestions(@PathVariable Long userId) {
+		return questionService.getQuestionsAnsweredIncorrectly(userId);
+	}
 	
 	@RequestMapping(value = { "/api/question/{lineItemLevelId}/{lineItemLevelIndex}/user/{userId}/correctlyAnsweredQuestions" }, method=RequestMethod.GET)
-	public Iterable<Question> getCorrectlyAnsweredQuestions(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
+	public Iterable<Question> getCorrectlyAnsweredQuestionsByCell(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
 		return questionService.getQuestionsAnsweredCorrectlyAtAGivenLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex, userId);
 	}
 	
 	@RequestMapping(value = { "/api/question/{lineItemLevelId}/{lineItemLevelIndex}/user/{userId}/incorrectlyAnsweredQuestions" }, method=RequestMethod.GET)
-	public Iterable<Question> getIncorrectlyAnsweredQuestions(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
+	public Iterable<Question> getIncorrectlyAnsweredQuestionsByCell(@PathVariable Long lineItemLevelId, @PathVariable Long lineItemLevelIndex, @PathVariable Long userId) {
 		return questionService.getQuestionsAnsweredIncorrectlyAtAGivenLineItemAndLevelNumber(lineItemLevelId, lineItemLevelIndex, userId);
 	}
 	

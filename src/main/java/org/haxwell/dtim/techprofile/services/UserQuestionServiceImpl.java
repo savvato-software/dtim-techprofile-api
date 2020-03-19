@@ -23,7 +23,7 @@ public class UserQuestionServiceImpl implements UserQuestionService {
 
 	public List<Question> getNextQuestionsForCareerGoal(Long userId, Long careerGoalId, Integer maxToReturn) {
 		// select all questions for this user that they have been asked, but not successfully answered.
-		List<Question> allQuestionsAskedButNotSuccessfullyAnswered = questionService.getAllQuestionsAskedButNotSuccessfullyAnswered(userId);
+		List<Question> allQuestionsAskedButNotSuccessfullyAnswered = (List<Question>)questionService.getQuestionsAnsweredIncorrectly(userId); // getAllQuestionsAskedButNotSuccessfullyAnswered(userId);
 		
 		// select all questions for this career goal
 		List<Question> allQuestionsForThisCareerGoal = careerGoalService.getQuestionsForCareerGoal(careerGoalId);
