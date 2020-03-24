@@ -75,4 +75,9 @@ public class TechProfileTopic {
 	public TechProfileTopic() {
 		
 	}
+	
+	public String toString() {
+		return this.id + " " + this.name;
+	}
+	
 }

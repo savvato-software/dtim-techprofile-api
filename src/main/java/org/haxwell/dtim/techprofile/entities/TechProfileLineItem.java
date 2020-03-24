@@ -98,4 +98,8 @@ public class TechProfileLineItem {
 	public TechProfileLineItem() {
 		
 	}
+	
+	public String toString() {
+		return this.id + " " + this.name + " |" + this.l0_description+ " |" + this.l1_description+ " |" + this.l2_description+ " |" + this.l3_description;
+	}
 }
