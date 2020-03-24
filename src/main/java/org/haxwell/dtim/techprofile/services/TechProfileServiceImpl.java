@@ -3,6 +3,7 @@ package org.haxwell.dtim.techprofile.services;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.entities.TechProfile;
 import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
@@ -28,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TechProfileServiceImpl implements TechProfileService {
 
+	private static final Log logger = LogFactory.getLog(TechProfileService.class);
+	
 	@PersistenceContext
 	EntityManager em;
 	
@@ -55,8 +60,42 @@ public class TechProfileServiceImpl implements TechProfileService {
 		
 		TechProfile tp = null;
 		
+		ArrayList<Long> idsArr = new ArrayList<>();
+		
 		if (opt.isPresent()) {
+			
 			tp = opt.get();
+			
+			// make sure we have unique instances of each techprofilelineitem... because a topic can share a line item with another topic.
+			// if it does, by default, both topics will have the same instance. This is a problem, because the sequence that the topic appears
+			// within a topic, can be different for each topic. You need unique instances to represent that.
+			
+			// for each topic
+			Set<TechProfileTopic> tpTopics = tp.getTopics();
+			tpTopics.forEach((t) -> {
+				Set<TechProfileLineItem> tpTopicLineItems = t.getLineItems();
+				Set<TechProfileLineItem> set2 = new HashSet<>();
+
+				// for each of its line items
+				tpTopicLineItems.forEach((li) -> {
+					//   check if we've seen it before
+					if (idsArr.contains(li.getId())) {
+
+						//   if so, create a new instance, remove the old instance, replace with the new
+						TechProfileLineItem newLineItem = new TechProfileLineItem(li.getName(), li.getL0Description(), li.getL1Description(), li.getL2Description(), li.getL3Description());
+						newLineItem.setId(li.getId());
+						set2.add(newLineItem);
+
+					} else {
+					
+						set2.add(li);
+						idsArr.add(li.getId());
+					}
+					
+				});
+				
+				t.setLineItems(set2);
+			});
 			
 			Set<TechProfileTopic> topics = tp.getTopics();
 			
@@ -222,7 +261,7 @@ public class TechProfileServiceImpl implements TechProfileService {
 	private List getLineItemSequences(Long techProfileId) {
 		List resultList = em.createNativeQuery("select tpt.id as topic_id, tpli.id as tech_profile_line_item_id, tptlim.sequence FROM tech_profile tp, tech_profile_topic tpt, tech_profile_topic_map tptm, tech_profile_line_item tpli, tech_profile_topic_line_item_map tptlim WHERE tp.id=:techProfileId and tptm.tech_profile_id=tp.id and tptm.tech_profile_topic_id=tpt.id and tpt.id=tptlim.tech_profile_topic_id and tptlim.tech_profile_line_item_id=tpli.id;")
 				.setParameter("techProfileId", techProfileId).getResultList();
-		
+
 		return resultList;
 	}
 
