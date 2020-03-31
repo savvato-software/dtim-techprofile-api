@@ -99,6 +99,13 @@ public class QuestionAPIController {
 		return questionService.getAll();
 	}
 	
+	@RequestMapping(value = { "/api/question/search" }, method=RequestMethod.GET)
+	public Iterable<Question> getByTextOrDescription(HttpServletRequest request) {
+		String query = request.getParameter("query");
+		
+		return questionService.getByTextOrDescription(query);
+	}
+	
 	@RequestMapping(value = { "/api/question/save"}, method=RequestMethod.POST)
 	public Question save(HttpServletRequest request) {
 		Question rtn = null;

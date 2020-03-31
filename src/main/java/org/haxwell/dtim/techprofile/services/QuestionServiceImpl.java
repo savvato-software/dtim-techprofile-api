@@ -52,6 +52,11 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 	
 	@Override
+	public Iterable<Question> getByTextOrDescription(String query) {
+		return this.questionRepository.findByTextOrDescription(query);
+	}
+	
+	@Override
 	public Iterable<Question> getQuestionsAnsweredIncorrectly(Long userId) {
 		List<UserQuestionGrade> resultList = userQuestionGradeRepository.findByUserIdOrderBySessionIdDesc(userId);
 

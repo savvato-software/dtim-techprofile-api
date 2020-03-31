@@ -21,6 +21,9 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 	
 	Iterable<Question> findByIdIn(List ids);
 	
+	@Query(nativeQuery = true, value = "select q.* from question q where q.text like %?1% or q.description like %?1%")
+	Iterable<Question> findByTextOrDescription(String query);
+	
 	@Query(nativeQuery = true, value = "SELECT distinct q.* FROM question q, user_question_grade uqg WHERE uqg.user_id=?1 AND q.id=uqg.question_id ORDER BY q.id")
 	List<Question> findAllQuestionsAskedPeriod(Long userId);
 	
