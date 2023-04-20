@@ -24,15 +24,4 @@ public class TechProfileTopicAPIController {
 	public Iterable<Question> getQuestionsForTopic(@PathVariable Long topicId) {
 		return this.techProfileTopicService.getQuestionsByTopic(topicId);
 	}
-
-	@RequestMapping(value = { "/api/techprofile/topic/{topicId}/addExistingLineItemAsChild" }, method=RequestMethod.POST)
-	public boolean addExistingLineItemAsChild(HttpServletRequest request, @PathVariable Long topicId) {
-		Long existingLineItemId = Long.parseLong(request.getParameter("existingLineItemId"));
-		return this.techProfileTopicService.addExistingLineItemAsChild(topicId, existingLineItemId);
-	}
-
-	@RequestMapping(value = { "/api/techprofile/topic/{topicId}/lineItem/{lineItemId}" }, method=RequestMethod.DELETE)
-	public boolean deleteLineItemAsChild(HttpServletRequest request, @PathVariable Long topicId, @PathVariable Long lineItemId) {
-		return this.techProfileTopicService.removeLineItemAsChild(topicId, lineItemId);
-	}
 }
