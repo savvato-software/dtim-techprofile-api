@@ -5,8 +5,6 @@ import org.apache.commons.logging.LogFactory;
 import org.haxwell.dtim.techprofile.entities.Question;
 import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
 import org.haxwell.dtim.techprofile.repositories.TechProfileLineItemRepository;
-import org.haxwell.dtim.techprofile.repositories.TechProfileRepository;
-import org.haxwell.dtim.techprofile.repositories.TechProfileTopicRepository;
 import org.haxwell.dtim.techprofile.repositories.UserTechProfileLineItemScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,12 +1,8 @@
 package org.haxwell.dtim.techprofile.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.haxwell.dtim.techprofile.entities.TechProfile;
-import org.haxwell.dtim.techprofile.entities.TechProfileLineItem;
-import org.haxwell.dtim.techprofile.entities.TechProfileTopic;
 import org.haxwell.dtim.techprofile.entities.UserTechProfileLineItemScore;
+
+import java.util.List;
 
 public interface TechProfileService {
 
