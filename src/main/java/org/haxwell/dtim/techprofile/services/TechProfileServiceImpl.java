@@ -29,12 +29,6 @@ public class TechProfileServiceImpl implements TechProfileService {
 	EntityManager em;
 	
 	@Autowired
-	TechProfileRepository techProfileRepository;
-	
-	@Autowired
-	TechProfileTopicRepository techProfileTopicRepository;
-	
-	@Autowired
 	TechProfileLineItemRepository techProfileLineItemRepository;
 	
 	@Autowired
